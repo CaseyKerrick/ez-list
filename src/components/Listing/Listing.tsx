@@ -2,25 +2,33 @@ import React from 'react';
 import {
   FormControl,
   FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   TextField,
 } from '@mui/material';
+import Radio from '../base/Radio/Radio';
 import './Listing.css';
-import { NONAME } from 'dns';
+
 
 function Listing() {
+
+  const [templateType, setTemplateType] = React.useState('');
+  const radioOnChange = (value: string) => {
+    return () => setTemplateType(value);
+  };
+  
+
+
+
   return (
     <form>
+
       <div className='formQuestion'>
-        <FormControl>
-          <FormLabel id='template-type-label'>Template Type</FormLabel>
-          <RadioGroup aria-labelledby='template-type-label' name='template-type'>
-            <FormControlLabel value='Topographical' control={<Radio />} label='Topographical' />
-            <FormControlLabel value='Non-Topographical' control={<Radio />} label='Non-Topographical' />
-          </RadioGroup>
-        </FormControl>
+        <Radio
+          id='templateType'
+          radioButtons={['Topographical', 'Non-Topographical']}
+          title='Template Type'
+          onChange={radioOnChange}
+          selected={templateType}
+        />
       </div>
 
       <div className='formQuestion'>
