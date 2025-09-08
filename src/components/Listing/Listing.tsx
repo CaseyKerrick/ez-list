@@ -2,52 +2,47 @@ import React from 'react';
 import {
   FormControl,
   FormLabel,
-  TextField,
 } from '@mui/material';
 import Radio from '../base/Radio/Radio';
+import TextField from '../base/TextField/TextField';
 import './Listing.css';
 
 
 function Listing() {
 
   const [templateType, setTemplateType] = React.useState('');
-  const radioOnChange = (value: string) => {
-    return () => setTemplateType(value);
-  };
-  
-
-
+  const [title, setTitle] = React.useState('');
+  const [customLabelSKU, setCustomLabelSKU] = React.useState('');
 
   return (
     <form>
-
+      <div className='formQuestion'>
+        <TextField 
+          characterLimit={80}
+          title='Title'
+          value={title}
+          onChange={setTitle}
+          width={700}
+        />
+      </div>
       <div className='formQuestion'>
         <Radio
           id='templateType'
           radioButtons={['Topographical', 'Non-Topographical']}
           title='Template Type'
-          onChange={radioOnChange}
+          onChange={setTemplateType}
           selected={templateType}
         />
       </div>
-
       <div className='formQuestion'>
-        <FormControl>
-          <FormLabel id='image-upload-label'>Image Upload</FormLabel>
-          <span className='imageUploadPlaceholder'>&nbsp;</span>
-        </FormControl>
+        <TextField
+          title='Custom Label (SKU)'
+          value={customLabelSKU}
+          onChange={setCustomLabelSKU}
+          width={150}
+        />
       </div>
-
-      <div className='formQuestion'>
-        <FormControl>
-          <TextField
-            aria-labelledby='title-label'
-            id='title'
-            variant='outlined'
-            label='Title'
-          />
-        </FormControl>
-      </div>
+      
 
 
 

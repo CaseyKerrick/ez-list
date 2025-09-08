@@ -10,6 +10,10 @@ type propType = {
 
 function Radio(props: propType) {
 
+  const handleChange = (item: string) => {
+    return () => props.onChange(item);
+  }
+
   return (
     <div className='radioButtonsContainer'>
       <div className='title'>{props.title}</div>
@@ -21,7 +25,7 @@ function Radio(props: propType) {
             id={radioButton}
             name={props.id}
             value={radioButton}
-            onClick={props.onChange(radioButton)}
+            onClick={handleChange(radioButton)}
           />
           <label htmlFor={radioButton} className={`radioButton ${radioButton === props.selected && 'checkedRadioButton'}` }>{radioButton}</label>
         </span>
