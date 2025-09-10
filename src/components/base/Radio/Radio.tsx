@@ -1,3 +1,4 @@
+import React from 'react';
 import './Radio.css';
 
 type propType = {
@@ -6,6 +7,7 @@ type propType = {
   onChange: Function;
   id: string;
   selected: string;
+  required?: boolean;
 }
 
 function Radio(props: propType) {
@@ -16,7 +18,7 @@ function Radio(props: propType) {
 
   return (
     <div className='radioButtonsContainer'>
-      <div className='title'>{props.title}</div>
+      <div className='title'>{props.title}{props.required && '*'}</div>
       { props.radioButtons.length > 0 && props.radioButtons.map((radioButton: string) => (
         <span key={radioButton}>
           <input

@@ -5,15 +5,15 @@ import sortUpIcon from './sort-up-white.png';
 
 
 type PropType = {
-  dropdownItems: string[];
+  title: string;
+  required?: boolean;
   priorityItems?: string[];
+  dropdownItems: string[];
+  value: string;
+  onChange: Function;
   enableSearch: boolean;
   strict: boolean;
-  title: string;
-  onChange: Function;
-  value: string;
   width?: number;
-  required?: boolean;
 };
 
 function SearchDropdown(props: PropType) {
@@ -21,18 +21,15 @@ function SearchDropdown(props: PropType) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [filteredDropdownItems, setFilteredDropdownItems] = React.useState(props.dropdownItems);
   const [filteredPriorityItems, setFilteredPriorityItems] = React.useState(props.priorityItems || []);
+  const [pristine, setPristine] = React.useState(true);
   const [error, setError] = React.useState(false);
   const contentWidth = props.width || 250;
 
   const handleSearchChange = (e: any) => {
     props.onChange(e.target.value);
-    
-    if (error) {
-      setError(false);
-    }
-    if (!dropdownOpen) {
-      setDropdownOpen(true);
-    }
+    setError(false);
+    setDropdownOpen(true);
+    setPristine(false);
 
     const newDropdownItems = props.dropdownItems.filter(item => item.toUpperCase().includes(e.target.value.toUpperCase()));
     setFilteredDropdownItems(newDropdownItems);
@@ -47,6 +44,7 @@ function SearchDropdown(props: PropType) {
     props.onChange(item);
     setError(false);
     setDropdownOpen(false);
+    setPristine(false);
   };
 
   const calcDropdownBorderRadius = () => {
@@ -55,7 +53,7 @@ function SearchDropdown(props: PropType) {
   };
 
   const inputBlur = () => {
-    if (!props.value || (props.strict && !isValueInItems())) {
+    if ((!pristine && !props.value && props.required) || (props.strict && !isValueInItems())) {
       setError(true);
     }
   };
@@ -80,16 +78,24 @@ function SearchDropdown(props: PropType) {
           ? <img src={sortUpIcon} className='dropdownIcon' alt='Sort up icon' onClick={toggleDropdown} />
           : <img src={sortDownIcon} className='dropdownIcon' alt='Sort down icon' onClick={toggleDropdown} />
       }
+      
       { dropdownOpen &&
         <div className='dropdownContainer' style={{ width: `${contentWidth + 20}px` }}>
-          { filteredPriorityItems && filteredPriorityItems.map(item =>
+          {/* { filteredPriorityItems && filteredPriorityItems.map(item =>
             <div className={`dropdownItem ${item === props.value && 'highlightedItem'}`} key={item} onClick={selectDropdownItem(item)}>{item}</div>
           )}
           { filteredPriorityItems && filteredPriorityItems.length > 0 &&
             <hr className='dropdownItemsImportanceDivider' />
-          }
+          } */}
           { filteredDropdownItems && filteredDropdownItems.map(item => 
             <div className={`dropdownItem ${item === props.value && 'highlightedItem'}`} onClick={selectDropdownItem(item)} key={item}>{item}</div>
+          )}
+        </div>
+      }
+      { !!props.priorityItems?.length &&
+        <div className='suggestions' style={{ width: `${contentWidth + 20}px` }}>
+          { props.priorityItems && props.priorityItems.map(item => 
+            <div className='suggestionBubble' onClick={selectDropdownItem(item)}>{item}</div>
           )}
         </div>
       }
