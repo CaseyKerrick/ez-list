@@ -4,6 +4,7 @@ import TextField from '../base/TextField/TextField';
 import SearchDropdown from '../base/SearchDropdown/SearchDropdown';
 import DropdownData from '../../services/dropdownData/dropdownData';
 import './Listing.css';
+import Checklist from '../base/Checklist/Checklist';
 
 
 function Listing() {
@@ -18,6 +19,23 @@ function Listing() {
   const [city, setCity] = React.useState('');
   const [subject, setSubject] = React.useState('')
   const [countryRegionOfManufacture, setCountryRegionOfManufacture] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [region, setRegion] = React.useState('');
+  const [theme, setTheme] = React.useState('');
+  const [unitOfSale, setUnitOfSale] = React.useState('Single Unit');
+  const [postcardType, setPostcardType] = React.useState('');
+  const [originalOrLicensedReprint, setOriginalOrLicensedReprint] = React.useState('Original');
+  const [postageCondition, setPostageCondition] = React.useState('');
+  const [era, setEra] = React.useState('');
+  const [yearManufactured, setYearManufactured] = React.useState('');
+  const [numberOfItemsInSet, setNumberOfItemsInSet] = React.useState('');
+  const [features, setFeatures] = React.useState([]);
+  const [material, setMaterial] = React.useState([]);
+  const [continent, setContinent] = React.useState('');
+  const [brandOrPublisher, setBrandOrPublisher] = React.useState('');
+  const [franchise, setFranchise] = React.useState('');
+  const [occasion2, setOccasion2] = React.useState('');
+  const [character, setCharacter] = React.useState('');
 
   return (
     <form>
@@ -116,7 +134,173 @@ function Listing() {
           strict={true}
           value={countryRegionOfManufacture}
           onChange={setCountryRegionOfManufacture}
-          priorityItems={DropdownData.getCountriesRegionsOfManufacturePriority()}
+          priorityItems={DropdownData.getMostCommonCountries()}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Country'
+          priorityItems={DropdownData.getMostCommonCountries()}
+          dropdownItems={DropdownData.getCountries()}
+          enableSearch={true}
+          value={country}
+          onChange={setCountry}
+          strict={false}
+          default={countryRegionOfManufacture}
+        />
+      </div>
+      <div className='formQuestion'>
+        { country === 'United States' &&
+          <SearchDropdown
+            title='Region'
+            dropdownItems={DropdownData.getUsStates()}
+            enableSearch={true}
+            strict={true}
+            value={region}
+            onChange={setRegion}
+          />
+        }
+        { country !== 'United States' &&
+          <TextField
+            title='Region'
+            value={region}
+            onChange={setRegion}
+            disabled={!country}
+          />
+        }
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Theme'
+          priorityItems={DropdownData.getPriorityThemes()}
+          dropdownItems={DropdownData.getThemes()}
+          enableSearch={true}
+          value={theme}
+          onChange={setTheme}
+          strict={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Unit of Sale'
+          dropdownItems={DropdownData.getUnitsOfSale()}
+          enableSearch={false}
+          value={unitOfSale}
+          onChange={setUnitOfSale}
+          strict={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Type'
+          dropdownItems={DropdownData.getTypes()}
+          enableSearch={true}
+          value={postcardType}
+          onChange={setPostcardType}
+          strict={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='originalOrLicensedReprint'
+          radioButtons={['Original', 'Licensed Reprint']}
+          title='Original/Licensed Reprint'
+          selected={originalOrLicensedReprint}
+          onChange={setOriginalOrLicensedReprint}
+          required={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='postageCondition'
+          radioButtons={['Posted', 'Unposted']}
+          title='Postage Condition'
+          selected={postageCondition}
+          onChange={setPostageCondition}
+          required={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Era'
+          dropdownItems={['Divided Back (1907-1915)', 'Undivided Back (1901-1917)']}
+          enableSearch={true}
+          value={era}
+          onChange={setEra}
+          strict={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Year Manufactured'
+          value={yearManufactured}
+          onChange={setYearManufactured}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Number of Items in Set'
+          value={numberOfItemsInSet}
+          onChange={setNumberOfItemsInSet}
+          suggestions={['1']}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Checklist
+          title='Features'
+          checklistItems={DropdownData.getFeatures()}
+          selected={features}
+          onChange={setFeatures}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Checklist
+          title='Material'
+          checklistItems={DropdownData.getMaterials()}
+          selected={material}
+          onChange={setMaterial}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Continent'
+          dropdownItems={DropdownData.getContinents()}
+          enableSearch={false}
+          value={continent}
+          onChange={setContinent}
+          strict={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Brand/Publisher'
+          dropdownItems={DropdownData.getCommonPublishers()}
+          enableSearch={true}
+          value={brandOrPublisher}
+          onChange={setBrandOrPublisher}
+          strict={false}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Franchise'
+          value={franchise}
+          onChange={setFranchise}
+          suggestions={['Disney']}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Occasion'
+          value={occasion2}
+          onChange={setOccasion2}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Character'
+          value={character}
+          onChange={setCharacter}
         />
       </div>
 

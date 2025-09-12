@@ -1,4 +1,3 @@
-import React from 'react';
 import './Radio.css';
 
 type propType = {
@@ -12,9 +11,8 @@ type propType = {
 
 function Radio(props: propType) {
 
-  const handleChange = (item: string) => {
-    return () => props.onChange(item);
-  }
+  const handleChange = (item: string) => () =>
+    props.onChange(item);
 
   return (
     <div className='radioButtonsContainer'>

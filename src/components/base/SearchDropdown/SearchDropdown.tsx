@@ -3,7 +3,6 @@ import './SearchDropdown.css';
 import sortDownIcon from './sort-down-white.png';
 import sortUpIcon from './sort-up-white.png';
 
-
 type PropType = {
   title: string;
   required?: boolean;
@@ -14,16 +13,20 @@ type PropType = {
   enableSearch: boolean;
   strict: boolean;
   width?: number;
+  default?: string;
 };
 
 function SearchDropdown(props: PropType) {
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [filteredDropdownItems, setFilteredDropdownItems] = React.useState(props.dropdownItems);
-  const [filteredPriorityItems, setFilteredPriorityItems] = React.useState(props.priorityItems || []);
   const [pristine, setPristine] = React.useState(true);
   const [error, setError] = React.useState(false);
   const contentWidth = props.width || 250;
+
+  if (pristine && props.default) {
+    props.onChange(props.default);
+  }
 
   const handleSearchChange = (e: any) => {
     props.onChange(e.target.value);
@@ -33,9 +36,6 @@ function SearchDropdown(props: PropType) {
 
     const newDropdownItems = props.dropdownItems.filter(item => item.toUpperCase().includes(e.target.value.toUpperCase()));
     setFilteredDropdownItems(newDropdownItems);
-
-    const newPriorityItems = (props.priorityItems || []).filter(item => item.toUpperCase().includes(e.target.value.toUpperCase()));
-    setFilteredPriorityItems(newPriorityItems);
   };
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
@@ -53,7 +53,7 @@ function SearchDropdown(props: PropType) {
   };
 
   const inputBlur = () => {
-    if ((!pristine && !props.value && props.required) || (props.strict && !isValueInItems())) {
+    if ((!pristine && !props.value) || (props.strict && !isValueInItems())) {
       setError(true);
     }
   };
@@ -64,7 +64,7 @@ function SearchDropdown(props: PropType) {
 
   return (
     <div className='searchDropdownContainer'>
-      <div className={`searchDropdownTitle ${error && 'showError'}`}>{props.title}{props.required && '*'}</div>
+      <div className={`searchDropdownTitle ${props.required && error && 'showError'}`}>{props.title}{props.required && '*'}</div>
       <input
         type='text'
         className='searchDropdownInput'
@@ -78,15 +78,8 @@ function SearchDropdown(props: PropType) {
           ? <img src={sortUpIcon} className='dropdownIcon' alt='Sort up icon' onClick={toggleDropdown} />
           : <img src={sortDownIcon} className='dropdownIcon' alt='Sort down icon' onClick={toggleDropdown} />
       }
-      
       { dropdownOpen &&
         <div className='dropdownContainer' style={{ width: `${contentWidth + 20}px` }}>
-          {/* { filteredPriorityItems && filteredPriorityItems.map(item =>
-            <div className={`dropdownItem ${item === props.value && 'highlightedItem'}`} key={item} onClick={selectDropdownItem(item)}>{item}</div>
-          )}
-          { filteredPriorityItems && filteredPriorityItems.length > 0 &&
-            <hr className='dropdownItemsImportanceDivider' />
-          } */}
           { filteredDropdownItems && filteredDropdownItems.map(item => 
             <div className={`dropdownItem ${item === props.value && 'highlightedItem'}`} onClick={selectDropdownItem(item)} key={item}>{item}</div>
           )}
@@ -95,7 +88,7 @@ function SearchDropdown(props: PropType) {
       { !!props.priorityItems?.length &&
         <div className='suggestions' style={{ width: `${contentWidth + 20}px` }}>
           { props.priorityItems && props.priorityItems.map(item => 
-            <div className='suggestionBubble' onClick={selectDropdownItem(item)}>{item}</div>
+            <div className='suggestionBubble' onClick={selectDropdownItem(item)} key={`priority_${item}`}>{item}</div>
           )}
         </div>
       }

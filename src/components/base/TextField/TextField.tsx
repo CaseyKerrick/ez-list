@@ -9,6 +9,7 @@ type PropType = {
   width?: number;
   required?: boolean;
   suggestions?: string[];
+  disabled?: boolean;
 };
 
 function TextField(props: PropType) {
@@ -25,9 +26,8 @@ function TextField(props: PropType) {
     props.onChange(item);
   };
 
-  const widthChooser = (characterLimit?: boolean) => {
-    return props.width ? `${props.width + (characterLimit ? 15 : 0)}px` : 'inherit';
-  };
+  const widthChooser = (characterLimit?: boolean) =>
+    props.width ? `${props.width + (characterLimit ? 15 : 0)}px` : 'inherit';
 
   const inputBlur = () => {
     if (props.required && !props.value) {
@@ -47,13 +47,14 @@ function TextField(props: PropType) {
           style={{ width: widthChooser() }}
           maxLength={props.characterLimit}
           onBlur={inputBlur}
+          disabled={!!props.disabled}
         />
         { props.characterLimit && (
           <div className='characterLimit' style={{ width: widthChooser(true) }}>{props.value?.length || 0}/{props.characterLimit}</div>
         )}
         <div className='suggestions' style={{ width: widthChooser(true) }}>
           { props.suggestions && props.suggestions.map(item => 
-            <div className='suggestionBubble' onClick={suggestionSelect(item)}>{item}</div>
+            <div className='suggestionBubble' onClick={suggestionSelect(item)} key={`suggestion_${item}`}>{item}</div>
           )}
         </div>
       </div>
