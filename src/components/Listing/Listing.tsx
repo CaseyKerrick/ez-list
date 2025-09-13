@@ -3,8 +3,9 @@ import Radio from '../base/Radio/Radio';
 import TextField from '../base/TextField/TextField';
 import SearchDropdown from '../base/SearchDropdown/SearchDropdown';
 import DropdownData from '../../services/dropdownData/dropdownData';
-import './Listing.css';
 import Checklist from '../base/Checklist/Checklist';
+import Toggle from '../base/Toggle/Toggle';
+import './Listing.css';
 
 
 function Listing() {
@@ -36,6 +37,7 @@ function Listing() {
   const [franchise, setFranchise] = React.useState('');
   const [occasion2, setOccasion2] = React.useState('');
   const [character, setCharacter] = React.useState('');
+  const [signed, setSigned] = React.useState(false);
 
   return (
     <form>
@@ -301,6 +303,14 @@ function Listing() {
           title='Character'
           value={character}
           onChange={setCharacter}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Signed'
+          value={signed}
+          onChange={setSigned}
+          disabled={true}
         />
       </div>
 

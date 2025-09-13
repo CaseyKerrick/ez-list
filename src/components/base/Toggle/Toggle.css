@@ -1,0 +1,37 @@
+.toggleButton {
+  height: 25px;
+  width: 50px;
+  display: block;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.toggleButtonOn {
+  border: 3px solid #90029C;
+  background-color: #90029C;
+}
+
+.toggleButtonOff {
+  border: 3px solid gray;
+  background-color: gray;
+}
+
+.toggleCircle {
+  border-radius: 10px;
+  height: 25px;
+  width: 25px;
+  background-color: white;
+}
+
+.toggleCircleLeft {
+  float: left;
+}
+
+.toggleCircleRight {
+  float: right;
+}
+
+.toggleDisabled {
+  border-color: gray;
+}
+
