@@ -5,7 +5,9 @@ import SearchDropdown from '../base/SearchDropdown/SearchDropdown';
 import DropdownData from '../../services/dropdownData/dropdownData';
 import Checklist from '../base/Checklist/Checklist';
 import Toggle from '../base/Toggle/Toggle';
+import TextArea from '../base/TextArea/TextArea';
 import './Listing.css';
+import DescriptionData from '../../services/descriptions/descriptionData';
 
 
 function Listing() {
@@ -38,6 +40,27 @@ function Listing() {
   const [occasion2, setOccasion2] = React.useState('');
   const [character, setCharacter] = React.useState('');
   const [signed, setSigned] = React.useState(false);
+  const [signedBy, setSignedBy] = React.useState('');
+  const [personalize, setPersonalize] = React.useState(false);
+  const [personalizationInstructions, setPersonalizationInstructions] = React.useState('');
+  const [artist, setArtist] = React.useState('');
+  const [featuredPerson, setFeaturedPerson] = React.useState('');
+  const [size, setSize] = React.useState('7x5x1');
+  const [timePeriodManufactured, setTimePeriodManufactured] = React.useState('');
+  const [californiaProp65Warning, setCaliforniaProp65Warning] = React.useState('');
+  const [unitQuantity, setUnitQuantity] = React.useState('');
+  const [unitType, setUnitType] = React.useState('');
+  const [condition, setCondition] = React.useState('Used');
+  const [conditionTypes, setConditionTypes] = React.useState([]);
+  const [conditionDescription, setConditionDescription] = React.useState('');
+
+  const decade = /[0-9][0-9][0-9]/.exec(yearManufactured) || [];
+  
+
+  React.useEffect(() => {
+    const descrip = [...conditionTypes.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
+    setConditionDescription(descrip);
+  }, [conditionTypes, setConditionDescription]);
 
   return (
     <form>
@@ -310,6 +333,116 @@ function Listing() {
           title='Signed'
           value={signed}
           onChange={setSigned}
+          disabled={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Signed By'
+          value={signedBy}
+          onChange={setSignedBy}
+          disabled={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Personalize'
+          value={personalize}
+          onChange={setPersonalize}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Personalization Instructions'
+          value={personalizationInstructions}
+          onChange={setPersonalizationInstructions}
+          disabled={!personalize}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Artist'
+          value={artist}
+          onChange={setArtist}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Artist'
+          value={artist}
+          onChange={setArtist}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Featured Person'
+          value={featuredPerson}
+          onChange={setFeaturedPerson}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Size'
+          value={size}
+          onChange={setSize}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Time Period Manufactured'
+          value={timePeriodManufactured}
+          onChange={setTimePeriodManufactured}
+          default={decade.length > 0 ? `${decade[0]}0-${decade[0]}9` : ''}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='California Prop 65 Warning'
+          value={californiaProp65Warning}
+          onChange={setCaliforniaProp65Warning}
+          characterLimit={800}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Unit Quantity'
+          value={unitQuantity}
+          onChange={setUnitQuantity}
+        />
+      </div>
+      <div className='formQuestion'>
+        <SearchDropdown
+          title='Unit Type'
+          dropdownItems={DropdownData.getUnitTypes()}
+          enableSearch={true}
+          value={unitType}
+          onChange={setUnitType}
+          strict={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='condition'
+          radioButtons={['New', 'Used']}
+          title='Condition'
+          selected={condition}
+          onChange={setCondition}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Checklist
+          title='Condition Types'
+          checklistItems={['Tear', 'Crease', 'Bend', 'Pinhole']}
+          selected={conditionTypes}
+          onChange={setConditionTypes}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextArea
+          title='Condition Description'
+          value={conditionDescription}
+          onChange={setConditionDescription}
+          characterLimit={1000}
           disabled={true}
         />
       </div>

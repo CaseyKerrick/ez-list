@@ -24,9 +24,12 @@ function SearchDropdown(props: PropType) {
   const [error, setError] = React.useState(false);
   const contentWidth = props.width || 250;
 
-  if (pristine && props.default) {
-    props.onChange(props.default);
-  }
+  React.useEffect(() => {
+    if (pristine && props.default) {
+      props.onChange(props.default);
+    }
+  }, [pristine, props.default, props.onChange, props]);
+
 
   const handleSearchChange = (e: any) => {
     props.onChange(e.target.value);

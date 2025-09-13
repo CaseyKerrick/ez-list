@@ -7,6 +7,7 @@ type PropType = {
   selected: string[];
   onChange: Function;
   required?: boolean;
+  disabled?: boolean;
 };
 
 function Checklist(props: PropType) {
@@ -28,7 +29,7 @@ function Checklist(props: PropType) {
 
   return (
     <div className='checklistContainer'>
-       <div className={`title ${props.required && error && 'error'}`}>{props.title}{props.required && '*'}</div>
+       <div className={`title ${props.required && error && 'error'} ${props.disabled && 'disabled'}`}>{props.title}{props.required && '*'}</div>
       { props.checklistItems.length > 0 && props.checklistItems.map((checklistItem: string) => (
         <span key={checklistItem} onClick={handleChange(checklistItem)}>
           <input

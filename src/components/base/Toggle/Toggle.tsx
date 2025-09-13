@@ -19,7 +19,7 @@ function Toggle(props: PropType) {
 
   return (
     <div className={`checklistContainer ${props.disabled && 'toggleDisabled'}`}>
-      <div className='title'>{props.title}{props.required && '*'}</div>
+      <div className={`title ${props.disabled && 'disabled'}`}>{props.title}{props.required && '*'}</div>
       <span onClick={handleChange()} className={`toggleButton ${props.value ? 'toggleButtonOn' : 'toggleButtonOff'}`}>
         <input type='checkbox' className='checkbox' />
         <div className={`toggleCircle ${props.value ? 'toggleCircleRight' : 'toggleCircleLeft'}`}></div>

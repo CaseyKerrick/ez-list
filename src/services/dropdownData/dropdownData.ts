@@ -63,6 +63,10 @@ const DropdownData = {
   getCommonPublishers: () => {
     return ['Colourpicture', 'Curt Teich', 'EC Kropp', 'HS Crocker', 'J Salmon', 'Mike Roberts Studio', 'Raphael Tuck & Sons', 'Tichnor Brothers', 'Dexter Press'];
   },
+
+  getUnitTypes: () => {
+    return ['Unit', 'oz', 'lb', 'fl oz', 'gal', 'ft', 'ft²', 'ft³'];
+  },
 }
 
 export default DropdownData;
