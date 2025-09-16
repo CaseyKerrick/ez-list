@@ -36,4 +36,11 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-size: 20px;
+  cursor: pointer;
+}
+
+.currentNavItem {
+  background-color: white;
+  color: #90029C;
+  border-bottom-color: white;
 }

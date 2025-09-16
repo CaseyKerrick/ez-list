@@ -69,6 +69,19 @@ function Listing() {
   const [startingBid, setStartingBid] = React.useState('');
   const [buyItNowPrice, setBuyItNowPrice] = React.useState('');
   const [autoRelist, setAutoRelist] = React.useState(false);
+  const [shippingPolicy, setShippingPolicy] = React.useState('');
+  const [packageWeight, setPackageWeight] = React.useState('1');
+  const [packageDimensions, setPackageDimensions] = React.useState('7x5x1');
+  const [irregularPackage, setIrregularPackage] = React.useState(false);
+  const [itemLocationCountryRegion, setItemLocationCountryRegion] = React.useState('United States');
+  const [itemLocationZipCode, setItemLocationZipCode] = React.useState('53228');
+  const [itemLocationCityState, setItemLocationCityState] = React.useState('Milwaukee, Wisconsin');
+  const [productDocuments, setProductDocuments] = React.useState(false);
+  const [promoteListingGeneral, setPromoteListingGeneral] = React.useState(true);
+  const [adRate, setAdRate] = React.useState('3%');
+  const [promoteListingPriority, setPromoteListingPriority] = React.useState(false);
+  const [charity, setCharity] = React.useState(false);
+
 
   const decade = /[0-9][0-9][0-9]/.exec(yearManufactured) || [];
 
@@ -598,7 +611,106 @@ function Listing() {
           required={true}
         />
       </div>
-
+      <div className='formQuestion'>
+        <Radio
+          id='shippingPolicy'
+          radioButtons={['Shipping Postcards Under $20', 'Shipping Postcards Over $20']}
+          title='Shipping Policy'
+          selected={Number.parseFloat(price) > 20 ? 'Shipping Postcards Over $20' : 'Shipping Postcards Under $20'}
+          onChange={setShippingPolicy}
+          required={true}
+          disabled={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Package Weight (oz)'
+          value={packageWeight}
+          onChange={setPackageWeight}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Package Dimensions'
+          value={packageDimensions}
+          onChange={setPackageDimensions}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Irregular Package'
+          value={irregularPackage}
+          onChange={setIrregularPackage}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Item Location - Country/Region'
+          value={itemLocationCountryRegion}
+          onChange={setItemLocationCountryRegion}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Item Location - Zip Code'
+          value={itemLocationZipCode}
+          onChange={setItemLocationZipCode}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Item Location - City, State'
+          value={itemLocationCityState}
+          onChange={setItemLocationCityState}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Item Disclosures - Product Documents'
+          value={productDocuments}
+          onChange={setProductDocuments}
+          required={true}
+          disabled={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Promote Your Listing (General)'
+          value={promoteListingGeneral}
+          onChange={setPromoteListingGeneral}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Listing Ad Rate (General)'
+          value={adRate}
+          onChange={setAdRate}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Promote Your Listing (Priority)'
+          value={promoteListingPriority}
+          onChange={setPromoteListingPriority}
+          required={true}
+          disabled={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Charity'
+          value={charity}
+          onChange={setCharity}
+          required={true}
+          disabled={true}
+        />
+      </div>
 
 
 
