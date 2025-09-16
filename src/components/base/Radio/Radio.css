@@ -7,10 +7,12 @@
   border-radius: 10px;
   height: 40px;
   display: inline-block;
-  width: 150px;
+  min-width: 130px;
   text-align: center;
   line-height: 40px;
   margin: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .checkedRadioButton {
@@ -22,6 +24,7 @@
   border: 3px solid #90029C;
   border-radius: 10px;
   width: fit-content;
+  margin-top: 10px;
 }
 
 .title {
@@ -33,4 +36,13 @@
   width: fit-content;
   font-size: 13px;
   color: #90029C;
+  margin-right: 10px;
+}
+
+.disabledButton {
+  border-color: gray;
+}
+
+.disabledSelectedButton {
+  background-color: gray;
 }

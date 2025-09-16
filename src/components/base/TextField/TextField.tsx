@@ -11,6 +11,7 @@ type PropType = {
   suggestions?: string[];
   disabled?: boolean;
   default?: string;
+  currency?: boolean;
 };
 
 function TextField(props: PropType) {
@@ -46,11 +47,11 @@ function TextField(props: PropType) {
   };
 
   return (
-    <>
+    <div className='textInputContainer'>
       <div className={`textFieldTitle ${error && 'error'} ${props.disabled && 'disabled'}`}>{props.title}{props.required && '*'}</div>
       <input
         type='text'
-        className='textInput'
+        className={`textInput ${props.currency ? 'textInputCurrency' : ''}`}
         onChange={handleChange}
         defaultValue={props.value}
         style={{ width: widthChooser() }}
@@ -58,6 +59,9 @@ function TextField(props: PropType) {
         onBlur={inputBlur}
         disabled={!!props.disabled}
       />
+      { props.currency && (
+        <div className='currency'>$</div>
+      )}
       { props.characterLimit && (
         <div className={`characterLimit ${props.disabled && 'disabled'}`} style={{ width: widthChooser(true) }}>{props.value?.length || 0}/{props.characterLimit}</div>
       )}
@@ -66,7 +70,7 @@ function TextField(props: PropType) {
           <div className='suggestionBubble' onClick={suggestionSelect(item)} key={`suggestion_${item}`}>{item}</div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

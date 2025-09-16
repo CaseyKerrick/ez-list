@@ -1,0 +1,17 @@
+.dateTimeContainer {
+  /* display: flex; */
+  width: 750px;
+  /* justify-content: space-around; */
+  border: 3px solid #90029C;
+  border-radius: 10px;
+}
+
+.dateTimeInputs {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.toggleDisabled {
+  border-color: gray;
+}

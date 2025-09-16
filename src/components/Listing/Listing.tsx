@@ -3,11 +3,13 @@ import Radio from '../base/Radio/Radio';
 import TextField from '../base/TextField/TextField';
 import SearchDropdown from '../base/SearchDropdown/SearchDropdown';
 import DropdownData from '../../services/dropdownData/dropdownData';
+import DescriptionData from '../../services/descriptions/descriptionData';
 import Checklist from '../base/Checklist/Checklist';
 import Toggle from '../base/Toggle/Toggle';
 import TextArea from '../base/TextArea/TextArea';
+import DisplayText from '../base/DisplayText/DisplayText';
 import './Listing.css';
-import DescriptionData from '../../services/descriptions/descriptionData';
+import DateTime from '../base/DateTime/DateTime';
 
 
 function Listing() {
@@ -53,9 +55,22 @@ function Listing() {
   const [condition, setCondition] = React.useState('Used');
   const [conditionTypes, setConditionTypes] = React.useState([]);
   const [conditionDescription, setConditionDescription] = React.useState('');
+  const [format, setFormat] = React.useState('Buy It Now');
+  const [price, setPrice] = React.useState('');
+  const [requireImmediatePayment, setRequireImmediatePayment] = React.useState(format === 'Buy It Now');
+  const [quantity, setQuantity] = React.useState('1');
+  const [allowOffers, setAllowOffers] = React.useState(true);
+  const [paymentPolicy, setPaymentPolicy] = React.useState('BIN Immediate Payment');
+  const [minimumOffer, setMinimumOffer] = React.useState('');
+  const [autoAccept, setAutoAccept] = React.useState('');
+  const [scheduleListing, setScheduleListing] = React.useState(false);
+  const [scheduleListingDateTime, setScheduleListingDateTime] = React.useState({ date: '', time: '', amPm: 'AM' });
+  const [duration, setDuration] = React.useState('7 Days');
+  const [startingBid, setStartingBid] = React.useState('');
+  const [buyItNowPrice, setBuyItNowPrice] = React.useState('');
+  const [autoRelist, setAutoRelist] = React.useState(false);
 
   const decade = /[0-9][0-9][0-9]/.exec(yearManufactured) || [];
-  
 
   React.useEffect(() => {
     const descrip = [...conditionTypes.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
@@ -446,7 +461,143 @@ function Listing() {
           disabled={true}
         />
       </div>
-
+      <div className='formQuestion'>
+        <DisplayText
+          title='Description'
+          value={DescriptionData.getDescription()}
+          parseHtml={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='format'
+          radioButtons={['Buy It Now', 'Auction']}
+          title='Format'
+          selected={format}
+          onChange={setFormat}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Price'
+          value={price}
+          onChange={setPrice}
+          suggestions={['5.95', '15.95', '19.95']}
+          currency={true}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Require Immediate Payment'
+          value={requireImmediatePayment}
+          onChange={setRequireImmediatePayment}
+          disabled={true}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Quantity'
+          value={quantity}
+          onChange={setQuantity}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='paymentPolicy'
+          radioButtons={['BIN Immediate Payment', 'No Immediate Pay - Auction']}
+          title='Payment Policy'
+          selected={paymentPolicy}
+          onChange={setPaymentPolicy}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Allow Offers'
+          value={allowOffers}
+          onChange={setAllowOffers}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Minimum Offer'
+          value={minimumOffer}
+          onChange={setMinimumOffer}
+          currency={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Auto Accept'
+          value={autoAccept}
+          onChange={setAutoAccept}
+          currency={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Schedule Your Listing?'
+          value={scheduleListing}
+          onChange={setScheduleListing}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <DateTime
+          title='Schedule Your Listing'
+          required={true}
+          value={scheduleListingDateTime}
+          onChange={setScheduleListingDateTime}
+          disabled={!scheduleListing}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Radio
+          id='auctionDuration'
+          radioButtons={['7 Days', '10 Days']}
+          title='Duration'
+          selected={duration}
+          onChange={setDuration}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Starting Bid'
+          value={startingBid}
+          onChange={setStartingBid}
+          currency={true}
+          required={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Buy It Now Price (Optional)'
+          value={buyItNowPrice}
+          onChange={setBuyItNowPrice}
+          currency={true}
+        />
+      </div>
+      <div className='formQuestion'>
+        <TextField
+          title='Buy It Now Price (Optional)'
+          value={buyItNowPrice}
+          onChange={setBuyItNowPrice}
+        />
+      </div>
+      <div className='formQuestion'>
+        <Toggle
+          title='Auto Relist'
+          value={autoRelist}
+          onChange={setAutoRelist}
+          required={true}
+        />
+      </div>
 
 
 

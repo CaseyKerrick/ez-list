@@ -16,3 +16,7 @@ form {
   border: 2px solid black;
 }
 
+.toggleDisabled {
+  border-color: gray;
+}
+

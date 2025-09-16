@@ -8,6 +8,7 @@ type PropType = {
   characterLimit?: number;
   width?: number;
   disabled?: boolean;
+  parseHtml?: boolean;
 };
 
 function TextArea(props: PropType) {

@@ -1,7 +1,11 @@
 import Listing from './components/Listing/Listing';
 import './App.css';
+import React from 'react';
 
 function App() {
+
+  const [currentPage, setCurrentPage] = React.useState('App');
+
   return (
     <>
       <div className="navbar">

@@ -1,0 +1,9 @@
+.textAreaDisplay {
+  border: 3px solid #90029C;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 325px;
+  overflow: scroll;
+}
+
