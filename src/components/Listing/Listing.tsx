@@ -10,85 +10,25 @@ import TextArea from '../base/TextArea/TextArea';
 import DisplayText from '../base/DisplayText/DisplayText';
 import './Listing.css';
 import DateTime from '../base/DateTime/DateTime';
+import Button from '../base/Button/Button';
+import { FormContext, FormContextType } from '../../FormContext';
 
 
 function Listing() {
 
-  const [templateType, setTemplateType] = React.useState('');
-  const [title, setTitle] = React.useState('');
-  const [customLabelSKU, setCustomLabelSKU] = React.useState('');
-  const [storeCategory1, setStoreCategory1] = React.useState('');
-  const [storeCategory2, setStoreCategory2] = React.useState('');
-  const [upc, setUpc] = React.useState('');
-  const [occasion, setOccasion] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [subject, setSubject] = React.useState('')
-  const [countryRegionOfManufacture, setCountryRegionOfManufacture] = React.useState('');
-  const [country, setCountry] = React.useState('');
-  const [region, setRegion] = React.useState('');
-  const [theme, setTheme] = React.useState('');
-  const [unitOfSale, setUnitOfSale] = React.useState('Single Unit');
-  const [postcardType, setPostcardType] = React.useState('');
-  const [originalOrLicensedReprint, setOriginalOrLicensedReprint] = React.useState('Original');
-  const [postageCondition, setPostageCondition] = React.useState('');
-  const [era, setEra] = React.useState('');
-  const [yearManufactured, setYearManufactured] = React.useState('');
-  const [numberOfItemsInSet, setNumberOfItemsInSet] = React.useState('');
-  const [features, setFeatures] = React.useState([]);
-  const [material, setMaterial] = React.useState([]);
-  const [continent, setContinent] = React.useState('');
-  const [brandOrPublisher, setBrandOrPublisher] = React.useState('');
-  const [franchise, setFranchise] = React.useState('');
-  const [occasion2, setOccasion2] = React.useState('');
-  const [character, setCharacter] = React.useState('');
-  const [signed, setSigned] = React.useState(false);
-  const [signedBy, setSignedBy] = React.useState('');
-  const [personalize, setPersonalize] = React.useState(false);
-  const [personalizationInstructions, setPersonalizationInstructions] = React.useState('');
-  const [artist, setArtist] = React.useState('');
-  const [featuredPerson, setFeaturedPerson] = React.useState('');
-  const [size, setSize] = React.useState('7x5x1');
-  const [timePeriodManufactured, setTimePeriodManufactured] = React.useState('');
-  const [californiaProp65Warning, setCaliforniaProp65Warning] = React.useState('');
-  const [unitQuantity, setUnitQuantity] = React.useState('');
-  const [unitType, setUnitType] = React.useState('');
-  const [condition, setCondition] = React.useState('Used');
-  const [conditionTypes, setConditionTypes] = React.useState([]);
-  const [conditionDescription, setConditionDescription] = React.useState('');
-  const [format, setFormat] = React.useState('Buy It Now');
-  const [price, setPrice] = React.useState('');
-  const [requireImmediatePayment, setRequireImmediatePayment] = React.useState(format === 'Buy It Now');
-  const [quantity, setQuantity] = React.useState('1');
-  const [allowOffers, setAllowOffers] = React.useState(true);
-  const [paymentPolicy, setPaymentPolicy] = React.useState('BIN Immediate Payment');
-  const [minimumOffer, setMinimumOffer] = React.useState('');
-  const [autoAccept, setAutoAccept] = React.useState('');
-  const [scheduleListing, setScheduleListing] = React.useState(false);
+  const FormData = React.useContext(FormContext) as FormContextType;
+
   const [scheduleListingDateTime, setScheduleListingDateTime] = React.useState({ date: '', time: '', amPm: 'AM' });
-  const [duration, setDuration] = React.useState('7 Days');
-  const [startingBid, setStartingBid] = React.useState('');
-  const [buyItNowPrice, setBuyItNowPrice] = React.useState('');
-  const [autoRelist, setAutoRelist] = React.useState(false);
-  const [shippingPolicy, setShippingPolicy] = React.useState('');
-  const [packageWeight, setPackageWeight] = React.useState('1');
-  const [packageDimensions, setPackageDimensions] = React.useState('7x5x1');
-  const [irregularPackage, setIrregularPackage] = React.useState(false);
-  const [itemLocationCountryRegion, setItemLocationCountryRegion] = React.useState('United States');
-  const [itemLocationZipCode, setItemLocationZipCode] = React.useState('53228');
-  const [itemLocationCityState, setItemLocationCityState] = React.useState('Milwaukee, Wisconsin');
-  const [productDocuments, setProductDocuments] = React.useState(false);
-  const [promoteListingGeneral, setPromoteListingGeneral] = React.useState(true);
-  const [adRate, setAdRate] = React.useState('3%');
-  const [promoteListingPriority, setPromoteListingPriority] = React.useState(false);
-  const [charity, setCharity] = React.useState(false);
-
-
-  const decade = /[0-9][0-9][0-9]/.exec(yearManufactured) || [];
+  const decade = /[0-9][0-9][0-9]/.exec(FormData.yearManufactured.value) || [];
 
   React.useEffect(() => {
-    const descrip = [...conditionTypes.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
-    setConditionDescription(descrip);
-  }, [conditionTypes, setConditionDescription]);
+    const descrip = [...FormData.conditionTypes.value.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
+    FormData.conditionDescription.set(descrip);
+  }, [FormData.conditionTypes.value, FormData.conditionDescription]);
+
+  const submitForm = () => {
+    alert('Listing has been submitted!');
+  };
 
   return (
     <form>
@@ -96,8 +36,8 @@ function Listing() {
         <TextField 
           characterLimit={80}
           title='Title'
-          value={title}
-          onChange={setTitle}
+          value={FormData.title.value}
+          onChange={FormData.title.set}
           width={700}
           required={true}
         />
@@ -107,8 +47,8 @@ function Listing() {
           id='templateType'
           radioButtons={['Topographical', 'Non-Topographical']}
           title='Template Type'
-          onChange={setTemplateType}
-          selected={templateType}
+          selected={FormData.templateType.value}
+          onChange={FormData.templateType.set}
           required={true}
         />
       </div>
@@ -116,8 +56,8 @@ function Listing() {
         <TextField
           characterLimit={50}
           title='Custom Label (SKU)'
-          value={customLabelSKU}
-          onChange={setCustomLabelSKU}
+          value={FormData.customLabelSKU.value}
+          onChange={FormData.customLabelSKU.set}
           width={150}
         />
       </div>
@@ -127,8 +67,8 @@ function Listing() {
           dropdownItems={DropdownData.getStoreCategories()}
           enableSearch={true}
           strict={true}
-          onChange={setStoreCategory1}
-          value={storeCategory1}
+          value={FormData.storeCategory1.value}
+          onChange={FormData.storeCategory1.set}
           required={true}
           width={400}
         />
@@ -139,8 +79,8 @@ function Listing() {
           dropdownItems={DropdownData.getStoreCategories()}
           enableSearch={true}
           strict={true}
-          onChange={setStoreCategory2}
-          value={storeCategory2}
+          value={FormData.storeCategory2.value}
+          onChange={FormData.storeCategory2.set}
           required={true}
           width={400}
         />
@@ -148,8 +88,8 @@ function Listing() {
       <div className='formQuestion'>
         <TextField
           title='UPC Number'
-          value={upc}
-          onChange={setUpc}
+          value={FormData.upc.value}
+          onChange={FormData.upc.set}
           width={150}
         />
       </div>
@@ -159,24 +99,24 @@ function Listing() {
           priorityItems={DropdownData.getOccasionsPriority()}
           dropdownItems={DropdownData.getOccasions()}
           enableSearch={true}
-          value={occasion}
-          onChange={setOccasion}
+          value={FormData.occasion.value}
+          onChange={FormData.occasion.set}
           strict={false}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='City'
-          value={city}
-          onChange={setCity}
+          value={FormData.city.value}
+          onChange={FormData.city.set}
           suggestions={['Chicago', 'New York City', 'San Francisco']}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Subject'
-          value={subject}
-          onChange={setSubject}
+          value={FormData.subject.value}
+          onChange={FormData.subject.set}
         />
       </div>
       <div className='formQuestion'>
@@ -185,8 +125,8 @@ function Listing() {
           dropdownItems={DropdownData.getCountriesRegionsOfManufacture()}
           enableSearch={true}
           strict={true}
-          value={countryRegionOfManufacture}
-          onChange={setCountryRegionOfManufacture}
+          value={FormData.countryRegionOfManufacture.value}
+          onChange={FormData.countryRegionOfManufacture.set}
           priorityItems={DropdownData.getMostCommonCountries()}
         />
       </div>
@@ -196,29 +136,29 @@ function Listing() {
           priorityItems={DropdownData.getMostCommonCountries()}
           dropdownItems={DropdownData.getCountries()}
           enableSearch={true}
-          value={country}
-          onChange={setCountry}
+          value={FormData.country.value}
+          onChange={FormData.country.set}
           strict={false}
-          default={countryRegionOfManufacture}
+          default={FormData.countryRegionOfManufacture.value}
         />
       </div>
       <div className='formQuestion'>
-        { country === 'United States' &&
+        { FormData.country.value === 'United States' &&
           <SearchDropdown
             title='Region'
             dropdownItems={DropdownData.getUsStates()}
             enableSearch={true}
             strict={true}
-            value={region}
-            onChange={setRegion}
+            value={FormData.region.value}
+            onChange={FormData.region.set}
           />
         }
-        { country !== 'United States' &&
+        { FormData.country.value !== 'United States' &&
           <TextField
             title='Region'
-            value={region}
-            onChange={setRegion}
-            disabled={!country}
+            value={FormData.region.value}
+            onChange={FormData.region.set}
+            disabled={!FormData.country.value}
           />
         }
       </div>
@@ -228,8 +168,8 @@ function Listing() {
           priorityItems={DropdownData.getPriorityThemes()}
           dropdownItems={DropdownData.getThemes()}
           enableSearch={true}
-          value={theme}
-          onChange={setTheme}
+          value={FormData.theme.value}
+          onChange={FormData.theme.set}
           strict={false}
         />
       </div>
@@ -238,8 +178,8 @@ function Listing() {
           title='Unit of Sale'
           dropdownItems={DropdownData.getUnitsOfSale()}
           enableSearch={false}
-          value={unitOfSale}
-          onChange={setUnitOfSale}
+          value={FormData.unitOfSale.value}
+          onChange={FormData.unitOfSale.set}
           strict={true}
         />
       </div>
@@ -248,8 +188,8 @@ function Listing() {
           title='Type'
           dropdownItems={DropdownData.getTypes()}
           enableSearch={true}
-          value={postcardType}
-          onChange={setPostcardType}
+          value={FormData.postcardType.value}
+          onChange={FormData.postcardType.set}
           strict={false}
         />
       </div>
@@ -258,8 +198,8 @@ function Listing() {
           id='originalOrLicensedReprint'
           radioButtons={['Original', 'Licensed Reprint']}
           title='Original/Licensed Reprint'
-          selected={originalOrLicensedReprint}
-          onChange={setOriginalOrLicensedReprint}
+          selected={FormData.originalOrLicensedReprint.value}
+          onChange={FormData.originalOrLicensedReprint.set}
           required={false}
         />
       </div>
@@ -268,8 +208,8 @@ function Listing() {
           id='postageCondition'
           radioButtons={['Posted', 'Unposted']}
           title='Postage Condition'
-          selected={postageCondition}
-          onChange={setPostageCondition}
+          selected={FormData.postageCondition.value}
+          onChange={FormData.postageCondition.set}
           required={false}
         />
       </div>
@@ -278,23 +218,23 @@ function Listing() {
           title='Era'
           dropdownItems={['Divided Back (1907-1915)', 'Undivided Back (1901-1917)']}
           enableSearch={true}
-          value={era}
-          onChange={setEra}
+          value={FormData.era.value}
+          onChange={FormData.era.set}
           strict={false}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Year Manufactured'
-          value={yearManufactured}
-          onChange={setYearManufactured}
+          value={FormData.yearManufactured.value}
+          onChange={FormData.yearManufactured.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Number of Items in Set'
-          value={numberOfItemsInSet}
-          onChange={setNumberOfItemsInSet}
+          value={FormData.numberOfItemsInSet.value}
+          onChange={FormData.numberOfItemsInSet.set}
           suggestions={['1']}
         />
       </div>
@@ -302,16 +242,16 @@ function Listing() {
         <Checklist
           title='Features'
           checklistItems={DropdownData.getFeatures()}
-          selected={features}
-          onChange={setFeatures}
+          selected={FormData.features.value}
+          onChange={FormData.features.set}
         />
       </div>
       <div className='formQuestion'>
         <Checklist
           title='Material'
           checklistItems={DropdownData.getMaterials()}
-          selected={material}
-          onChange={setMaterial}
+          selected={FormData.material.value}
+          onChange={FormData.material.set}
         />
       </div>
       <div className='formQuestion'>
@@ -319,8 +259,8 @@ function Listing() {
           title='Continent'
           dropdownItems={DropdownData.getContinents()}
           enableSearch={false}
-          value={continent}
-          onChange={setContinent}
+          value={FormData.continent.value}
+          onChange={FormData.continent.set}
           strict={true}
         />
       </div>
@@ -329,113 +269,106 @@ function Listing() {
           title='Brand/Publisher'
           dropdownItems={DropdownData.getCommonPublishers()}
           enableSearch={true}
-          value={brandOrPublisher}
-          onChange={setBrandOrPublisher}
+          value={FormData.brandOrPublisher.value}
+          onChange={FormData.brandOrPublisher.set}
           strict={false}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Franchise'
-          value={franchise}
-          onChange={setFranchise}
+          value={FormData.franchise.value}
+          onChange={FormData.franchise.set}
           suggestions={['Disney']}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Occasion'
-          value={occasion2}
-          onChange={setOccasion2}
+          value={FormData.occasion2.value}
+          onChange={FormData.occasion2.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Character'
-          value={character}
-          onChange={setCharacter}
+          value={FormData.character.value}
+          onChange={FormData.character.set}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Signed'
-          value={signed}
-          onChange={setSigned}
+          value={FormData.signed.value}
+          onChange={FormData.signed.set}
           disabled={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Signed By'
-          value={signedBy}
-          onChange={setSignedBy}
+          value={FormData.signedBy.value}
+          onChange={FormData.signedBy.set}
           disabled={true}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Personalize'
-          value={personalize}
-          onChange={setPersonalize}
+          value={FormData.personalize.value}
+          onChange={FormData.personalize.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Personalization Instructions'
-          value={personalizationInstructions}
-          onChange={setPersonalizationInstructions}
-          disabled={!personalize}
+          value={FormData.personalizationInstructions.value}
+          onChange={FormData.personalizationInstructions.set}
+          disabled={!FormData.personalize.value}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Artist'
-          value={artist}
-          onChange={setArtist}
-        />
-      </div>
-      <div className='formQuestion'>
-        <TextField
-          title='Artist'
-          value={artist}
-          onChange={setArtist}
+          value={FormData.artist.value}
+          onChange={FormData.artist.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Featured Person'
-          value={featuredPerson}
-          onChange={setFeaturedPerson}
+          value={FormData.featuredPerson.value}
+          onChange={FormData.featuredPerson.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Size'
-          value={size}
-          onChange={setSize}
+          value={FormData.size.value}
+          onChange={FormData.size.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Time Period Manufactured'
-          value={timePeriodManufactured}
-          onChange={setTimePeriodManufactured}
+          value={FormData.timePeriodManufactured.value}
+          onChange={FormData.timePeriodManufactured.set}
           default={decade.length > 0 ? `${decade[0]}0-${decade[0]}9` : ''}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='California Prop 65 Warning'
-          value={californiaProp65Warning}
-          onChange={setCaliforniaProp65Warning}
+          value={FormData.californiaProp65Warning.value}
+          onChange={FormData.californiaProp65Warning.set}
           characterLimit={800}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Unit Quantity'
-          value={unitQuantity}
-          onChange={setUnitQuantity}
+          value={FormData.unitQuantity.value}
+          onChange={FormData.unitQuantity.set}
         />
       </div>
       <div className='formQuestion'>
@@ -443,8 +376,8 @@ function Listing() {
           title='Unit Type'
           dropdownItems={DropdownData.getUnitTypes()}
           enableSearch={true}
-          value={unitType}
-          onChange={setUnitType}
+          value={FormData.unitType.value}
+          onChange={FormData.unitType.set}
           strict={true}
         />
       </div>
@@ -453,23 +386,23 @@ function Listing() {
           id='condition'
           radioButtons={['New', 'Used']}
           title='Condition'
-          selected={condition}
-          onChange={setCondition}
+          selected={FormData.condition.value}
+          onChange={FormData.condition.set}
         />
       </div>
       <div className='formQuestion'>
         <Checklist
           title='Condition Types'
           checklistItems={['Tear', 'Crease', 'Bend', 'Pinhole']}
-          selected={conditionTypes}
-          onChange={setConditionTypes}
+          selected={FormData.conditionTypes.value}
+          onChange={FormData.conditionTypes.set}
         />
       </div>
       <div className='formQuestion'>
         <TextArea
           title='Condition Description'
-          value={conditionDescription}
-          onChange={setConditionDescription}
+          value={FormData.conditionDescription.value}
+          onChange={FormData.conditionDescription.set}
           characterLimit={1000}
           disabled={true}
         />
@@ -486,16 +419,16 @@ function Listing() {
           id='format'
           radioButtons={['Buy It Now', 'Auction']}
           title='Format'
-          selected={format}
-          onChange={setFormat}
+          selected={FormData.format.value}
+          onChange={FormData.format.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Price'
-          value={price}
-          onChange={setPrice}
+          value={FormData.price.value}
+          onChange={FormData.price.set}
           suggestions={['5.95', '15.95', '19.95']}
           currency={true}
           required={true}
@@ -504,8 +437,8 @@ function Listing() {
       <div className='formQuestion'>
         <Toggle
           title='Require Immediate Payment'
-          value={requireImmediatePayment}
-          onChange={setRequireImmediatePayment}
+          value={FormData.requireImmediatePayment.value}
+          onChange={FormData.requireImmediatePayment.set}
           disabled={true}
           required={true}
         />
@@ -513,8 +446,8 @@ function Listing() {
       <div className='formQuestion'>
         <TextField
           title='Quantity'
-          value={quantity}
-          onChange={setQuantity}
+          value={FormData.quantity.value}
+          onChange={FormData.quantity.set}
           required={true}
         />
       </div>
@@ -523,40 +456,40 @@ function Listing() {
           id='paymentPolicy'
           radioButtons={['BIN Immediate Payment', 'No Immediate Pay - Auction']}
           title='Payment Policy'
-          selected={paymentPolicy}
-          onChange={setPaymentPolicy}
+          selected={FormData.paymentPolicy.value}
+          onChange={FormData.paymentPolicy.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Allow Offers'
-          value={allowOffers}
-          onChange={setAllowOffers}
+          value={FormData.allowOffers.value}
+          onChange={FormData.allowOffers.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Minimum Offer'
-          value={minimumOffer}
-          onChange={setMinimumOffer}
+          value={FormData.minimumOffer.value}
+          onChange={FormData.minimumOffer.set}
           currency={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Auto Accept'
-          value={autoAccept}
-          onChange={setAutoAccept}
+          value={FormData.autoAccept.value}
+          onChange={FormData.autoAccept.set}
           currency={true}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Schedule Your Listing?'
-          value={scheduleListing}
-          onChange={setScheduleListing}
+          value={FormData.scheduleListing.value}
+          onChange={FormData.scheduleListing.set}
           required={true}
         />
       </div>
@@ -566,7 +499,7 @@ function Listing() {
           required={true}
           value={scheduleListingDateTime}
           onChange={setScheduleListingDateTime}
-          disabled={!scheduleListing}
+          disabled={!FormData.scheduleListing.value}
         />
       </div>
       <div className='formQuestion'>
@@ -574,16 +507,16 @@ function Listing() {
           id='auctionDuration'
           radioButtons={['7 Days', '10 Days']}
           title='Duration'
-          selected={duration}
-          onChange={setDuration}
+          selected={FormData.duration.value}
+          onChange={FormData.duration.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Starting Bid'
-          value={startingBid}
-          onChange={setStartingBid}
+          value={FormData.startingBid.value}
+          onChange={FormData.startingBid.set}
           currency={true}
           required={true}
         />
@@ -591,23 +524,23 @@ function Listing() {
       <div className='formQuestion'>
         <TextField
           title='Buy It Now Price (Optional)'
-          value={buyItNowPrice}
-          onChange={setBuyItNowPrice}
+          value={FormData.buyItNowPrice.value}
+          onChange={FormData.buyItNowPrice.set}
           currency={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Buy It Now Price (Optional)'
-          value={buyItNowPrice}
-          onChange={setBuyItNowPrice}
+          value={FormData.buyItNowPrice.value}
+          onChange={FormData.buyItNowPrice.set}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Auto Relist'
-          value={autoRelist}
-          onChange={setAutoRelist}
+          value={FormData.autoRelist.value}
+          onChange={FormData.autoRelist.set}
           required={true}
         />
       </div>
@@ -616,8 +549,8 @@ function Listing() {
           id='shippingPolicy'
           radioButtons={['Shipping Postcards Under $20', 'Shipping Postcards Over $20']}
           title='Shipping Policy'
-          selected={Number.parseFloat(price) > 20 ? 'Shipping Postcards Over $20' : 'Shipping Postcards Under $20'}
-          onChange={setShippingPolicy}
+          selected={Number.parseFloat(FormData.price.value) >= 20 ? 'Shipping Postcards Over $20' : 'Shipping Postcards Under $20'}
+          onChange={FormData.shippingPolicy.set}
           required={true}
           disabled={true}
         />
@@ -625,54 +558,54 @@ function Listing() {
       <div className='formQuestion'>
         <TextField
           title='Package Weight (oz)'
-          value={packageWeight}
-          onChange={setPackageWeight}
+          value={FormData.packageWeight.value}
+          onChange={FormData.packageWeight.set}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Package Dimensions'
-          value={packageDimensions}
-          onChange={setPackageDimensions}
+          value={FormData.packageDimensions.value}
+          onChange={FormData.packageDimensions.set}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Irregular Package'
-          value={irregularPackage}
-          onChange={setIrregularPackage}
+          value={FormData.irregularPackage.value}
+          onChange={FormData.irregularPackage.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Item Location - Country/Region'
-          value={itemLocationCountryRegion}
-          onChange={setItemLocationCountryRegion}
+          value={FormData.itemLocationCountryRegion.value}
+          onChange={FormData.itemLocationCountryRegion.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Item Location - Zip Code'
-          value={itemLocationZipCode}
-          onChange={setItemLocationZipCode}
+          value={FormData.itemLocationZipCode.value}
+          onChange={FormData.itemLocationZipCode.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Item Location - City, State'
-          value={itemLocationCityState}
-          onChange={setItemLocationCityState}
+          value={FormData.itemLocationCityState.value}
+          onChange={FormData.itemLocationCityState.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Item Disclosures - Product Documents'
-          value={productDocuments}
-          onChange={setProductDocuments}
+          value={FormData.productDocuments.value}
+          onChange={FormData.productDocuments.set}
           required={true}
           disabled={true}
         />
@@ -680,24 +613,24 @@ function Listing() {
       <div className='formQuestion'>
         <Toggle
           title='Promote Your Listing (General)'
-          value={promoteListingGeneral}
-          onChange={setPromoteListingGeneral}
+          value={FormData.promoteListingGeneral.value}
+          onChange={FormData.promoteListingGeneral.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <TextField
           title='Listing Ad Rate (General)'
-          value={adRate}
-          onChange={setAdRate}
+          value={FormData.adRate.value}
+          onChange={FormData.adRate.set}
           required={true}
         />
       </div>
       <div className='formQuestion'>
         <Toggle
           title='Promote Your Listing (Priority)'
-          value={promoteListingPriority}
-          onChange={setPromoteListingPriority}
+          value={FormData.promoteListingPriority.value}
+          onChange={FormData.promoteListingPriority.set}
           required={true}
           disabled={true}
         />
@@ -705,25 +638,15 @@ function Listing() {
       <div className='formQuestion'>
         <Toggle
           title='Charity'
-          value={charity}
-          onChange={setCharity}
+          value={FormData.charity.value}
+          onChange={FormData.charity.set}
           required={true}
           disabled={true}
         />
       </div>
-
-
-
-
-
-
-
-
       <div className='formQuestion'>
-
+        <Button onClick={submitForm} />
       </div>
-
-      
     </form>
   );
 }
