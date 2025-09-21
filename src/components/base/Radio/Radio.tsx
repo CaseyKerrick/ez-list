@@ -5,7 +5,7 @@ type propType = {
   title: string;
   onChange: Function;
   id: string;
-  selected: string;
+  value: string;
   required?: boolean;
   disabled?: boolean;
 }
@@ -15,7 +15,7 @@ function Radio(props: propType) {
   const handleChange = (item: string) => () =>
     props.onChange(item);
 
-  const isSelected = (item: string) => item === props.selected;
+  const isSelected = (item: string) => item === props.value;
 
   return (
     <div className={`radioButtonsContainer ${props.disabled && 'toggleDisabled'}`}>

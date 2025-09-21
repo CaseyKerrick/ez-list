@@ -13,9 +13,10 @@ type PropType = {
   };
   onChange: Function;
   disabled?: boolean;
+  id: string;
 };
 
-function DateTime({ title, required, value, onChange, disabled }: PropType) {
+function DateTime({ title, required, value, onChange, disabled, id }: PropType) {
 
   const [date, setDate] = React.useState(value.date);
   const [time, setTime] = React.useState(value.time);
@@ -23,9 +24,11 @@ function DateTime({ title, required, value, onChange, disabled }: PropType) {
   const [error, setError] = React.useState(false);
 
 
-  React.useEffect(() => {
-    onChange({ date, time, amPm });
-  }, [date, time, amPm, onChange]);
+  // TODO: fix Object value not updating the big state
+  // React.useEffect(() => {
+  //   console.log(value.time);
+  //   onChange({ date, time, amPm });
+  // }, [date, time, amPm, onChange]);
 
   return (
     <div className={`dateTimeContainer ${disabled && 'toggleDisabled'}`}>
@@ -37,6 +40,7 @@ function DateTime({ title, required, value, onChange, disabled }: PropType) {
           onChange={setDate}
           width={150}
           disabled={disabled}
+          id={`${id}_date`}
         />
         <TextField
           title='Time'
@@ -44,14 +48,15 @@ function DateTime({ title, required, value, onChange, disabled }: PropType) {
           onChange={setTime}
           width={150}
           disabled={disabled}
+          id={`${id}_time`}
         />
         <Radio
-          id='amPm'
           title='AM/PM'
           radioButtons={['AM', 'PM']}
-          selected={amPm}
+          value={amPm}
           onChange={setAmPm}
           disabled={disabled}
+          id={`${id}_amPm`}
         />
       </div>
     </div>

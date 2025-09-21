@@ -14,6 +14,7 @@ type PropType = {
   strict: boolean;
   width?: number;
   default?: string;
+  id: string;
 };
 
 function SearchDropdown(props: PropType) {
@@ -76,6 +77,7 @@ function SearchDropdown(props: PropType) {
         value={props.value}
         disabled={!props.enableSearch}
         onBlur={inputBlur}
+        id={props.id}
       />
       { dropdownOpen
           ? <img src={sortUpIcon} className='dropdownIcon' alt='Sort up icon' onClick={toggleDropdown} />

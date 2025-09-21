@@ -2,6 +2,7 @@ import React from 'react';
 import './TextField.css';
 
 type PropType = {
+  id: string;
   characterLimit?: number;
   title: string;
   value: string;
@@ -50,6 +51,7 @@ function TextField(props: PropType) {
     <div className='textInputContainer'>
       <div className={`textFieldTitle ${error && 'error'} ${props.disabled && 'disabled'}`}>{props.title}{props.required && '*'}</div>
       <input
+        id={props.id}
         type='text'
         className={`textInput ${props.currency ? 'textInputCurrency' : ''}`}
         onChange={handleChange}
