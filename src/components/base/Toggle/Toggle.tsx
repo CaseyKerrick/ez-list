@@ -1,4 +1,3 @@
-import React from 'react';
 import './Toggle.css';
 
 type PropType = {
@@ -22,7 +21,7 @@ function Toggle(props: PropType) {
     <div className={`checklistContainer ${props.disabled && 'toggleDisabled'}`}>
       <div className={`title ${props.disabled && 'disabled'}`}>{props.title}{props.required && '*'}</div>
       <span onClick={handleChange()} className={`toggleButton ${props.value ? 'toggleButtonOn' : 'toggleButtonOff'}`}>
-        <input type='checkbox' className='checkbox' id={props.id} />
+        <input type='checkbox' className='checkbox' id={props.id} data-testid={props.id} />
         <div className={`toggleCircle ${props.value ? 'toggleCircleRight' : 'toggleCircleLeft'}`}></div>
       </span>
     </div>

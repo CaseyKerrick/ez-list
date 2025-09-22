@@ -28,3 +28,22 @@
 .highlightedCell {
   background-color: rgb(236, 212, 239);
 }
+
+.settingsContainer {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  /* display: flex; */
+  /* position: relative; */
+
+  input[type=button] {
+    /* align-self: last; */
+    /* text-align: right; */
+    /* position: absolute;
+    right: 0;
+    margin-bottom: 50px; */
+    float: right;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+}

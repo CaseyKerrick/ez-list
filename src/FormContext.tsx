@@ -97,7 +97,7 @@ export type FormContextType = {
   charity: FormEntry<boolean>;
 };
 
-export const defaults = {
+export const defaultValues = {
   templateType: '',
   title: '',
   customLabelSKU: '',
@@ -138,7 +138,7 @@ export const defaults = {
   unitType: '',
   condition: 'Used',
   conditionTypes: [],
-  conditionDescription: '',
+  conditionDescription: DescriptionData.getBaseConditionDescription(),
   description: DescriptionData.getDescription(),
   format: 'Buy It Now',
   price: '',
@@ -172,12 +172,81 @@ export const defaults = {
   charity: false,
 };
 
+export const defaultToggles = {
+  templateType: true,
+  title: true,
+  customLabelSKU: true,
+  storeCategory1: true,
+  storeCategory2: true,
+  upc: false,
+  occasion: true,
+  city: true,
+  subject: false,
+  countryRegionOfManufacture: true,
+  country: true,
+  region: true,
+  theme: true,
+  unitOfSale: false,
+  postcardType: true,
+  originalOrLicensedReprint: false,
+  postageCondition: true,
+  era: true,
+  yearManufactured: true,
+  numberOfItemsInSet: false,
+  features: true,
+  material: false,
+  continent: false,
+  brandOrPublisher: true,
+  franchise: false,
+  occasion2: false,
+  character: false,
+  signed: false,
+  signedBy: false,
+  personalize: false,
+  personalizationInstructions: false,
+  artist: true,
+  featuredPerson: false,
+  size: false,
+  timePeriodManufactured: true,
+  californiaProp65Warning: false,
+  unitQuantity: false,
+  unitType: false,
+  condition: false,
+  conditionTypes: true,
+  conditionDescription: true,
+  description: false,
+  format: true,
+  price: true,
+  requireImmediatePayment: false,
+  quantity: false,
+  allowOffers: false,
+  paymentPolicy: false,
+  minimumOffer: false,
+  autoAccept: false,
+  scheduleListing: false,
+  scheduleListingDateTime: false,
+  duration: true,
+  startingBid: true,
+  buyItNowPrice: false,
+  autoRelist: false,
+  shippingPolicy: false,
+  packageWeight: false,
+  packageDimensions: false,
+  irregularPackage: false,
+  itemLocationCountryRegion: false,
+  itemLocationZipCode: false,
+  itemLocationCityState: false,
+  productDocuments: false,
+  promoteListingGeneral: false,
+  adRate: false,
+  promoteListingPriority: false,
+  charity: false,
+};
+
 export const FormContext = React.createContext<FormContextType | null>(null);
 
 const loadItem = (name: string): any => {
-  // const localStorageValue = LocalStorage.getSavedValue('default_' + name);
-  // console.log(name, localStorageValue);
-  return LocalStorage.getSavedValue('default_' + name) || defaults[name as keyof typeof defaults];
+  return LocalStorage.getSavedValue('default_' + name);
 };
 
 const loadToggle = (name: string): any => {
@@ -438,7 +507,7 @@ export const FormContextProvider = ({ children }: any) => {
       toggled: storeCategory2Toggle,
       setToggled: setStoreCategory2Toggle,
       description: 'Store Category 2',
-      type: TextField,
+      type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getStoreCategories(), enableSearch: true, strict: true, width: 400 },
     },
@@ -812,7 +881,11 @@ export const FormContextProvider = ({ children }: any) => {
     },
     conditionTypes: {
       value: conditionTypes,
-      set: setConditionTypes,
+      set: (items: string[]) => {
+        setConditionTypes(items);
+        const descrip = [...items.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
+        setConditionDescription(descrip);
+      },
       toggled: conditionTypesToggle,
       setToggled: setConditionTypesToggle,
       description: 'Condition Types',

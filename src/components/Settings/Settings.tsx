@@ -1,6 +1,13 @@
 import React from 'react';
-import { FormContext, FormContextType, FormEntry, defaults as FormDefaults } from '../../FormContext';
+import {
+  FormContext,
+  FormContextType,
+  FormEntry,
+  defaultValues as FormDefaults,
+  defaultToggles as FormDefaultToggles
+} from '../../FormContext';
 import Toggle from '../base/Toggle/Toggle';
+import Button from '../base/Button/Button';
 import Util from '../../services/util/util';
 import LocalStorage from '../../services/localStorage/localStorage';
 import './Settings.css';
@@ -10,6 +17,17 @@ function Settings() {
   const FormData = React.useContext(FormContext) as FormContextType;
 
   const [defaultValues, setDefaultValues] = React.useState(FormDefaults);
+
+  const resetAllDefaults = () => {
+    Util.getKeys(FormData).forEach((key) => {
+      LocalStorage.setSavedValue(key, FormDefaults[key]);
+
+      LocalStorage.setToggle(key, FormDefaultToggles[key]);
+      FormData[key as keyof typeof FormData].setToggled(key, FormDefaultToggles[key]);
+    });
+
+    window.location.reload();
+  };
 
   const createFormQuestion = (id: keyof typeof FormDefaults, question: FormEntry<any>) => {
     return React.createElement(
@@ -49,25 +67,28 @@ function Settings() {
 
   return (
     <>
-      <table className='settingsTable'>
-        <thead>
-          <tr>
-            <th className='settingsHeader'>Default Value</th>
-            <th className='settingsHeader'>Show Question</th>
-          </tr>
-        </thead>
-        <tbody>        
-          { Util.getKeys(FormData).map(entry => {
-            const formItem = FormData[entry];
-            return (
-              <tr key={entry}>
-                <td className='settingsCell'>{createFormQuestion(entry, formItem)}</td>
-                <td className='settingsCell'>{createFormToggle(entry, formItem)}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className='settingsContainer'>
+        <Button title='Reset All Defaults' onClick={resetAllDefaults} />
+        <table className='settingsTable'>
+          <thead>
+            <tr>
+              <th className='settingsHeader'>Default Value</th>
+              <th className='settingsHeader'>Show Question</th>
+            </tr>
+          </thead>
+          <tbody>        
+            { Util.getKeys(FormData).map(entry => {
+              const formItem = FormData[entry];
+              return (
+                <tr key={entry}>
+                  <td className='settingsCell'>{createFormQuestion(entry, formItem)}</td>
+                  <td className='settingsCell'>{createFormToggle(entry, formItem)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

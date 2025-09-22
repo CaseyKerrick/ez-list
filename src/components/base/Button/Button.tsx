@@ -2,6 +2,7 @@ import './Button.css';
 
 type PropType = {
   onClick: Function;
+  title: string;
 }
 
 function Button(props: PropType) {
@@ -13,7 +14,7 @@ function Button(props: PropType) {
   return (
     <input
       type='button'
-      value='List It!'
+      value={props.title}
       onClick={buttonClicked}
       className='primaryButton'
     />
