@@ -3,6 +3,7 @@ import './Button.css';
 type PropType = {
   onClick: Function;
   title: string;
+  id: string;
 }
 
 function Button(props: PropType) {
@@ -17,6 +18,7 @@ function Button(props: PropType) {
       value={props.title}
       onClick={buttonClicked}
       className='primaryButton'
+      data-testid={props.id}
     />
   );
 }

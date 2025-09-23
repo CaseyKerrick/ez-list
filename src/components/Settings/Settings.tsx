@@ -68,7 +68,7 @@ function Settings() {
   return (
     <>
       <div className='settingsContainer'>
-        <Button title='Reset All Defaults' onClick={resetAllDefaults} />
+        <Button title='Reset All Defaults' onClick={resetAllDefaults} id='resetDefaultsButton' />
         <table className='settingsTable'>
           <thead>
             <tr>

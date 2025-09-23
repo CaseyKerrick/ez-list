@@ -31,13 +31,13 @@ function Listing() {
     <form>
       { Util.getKeys(FormData).map(entry => {
         return (
-          <div className={`formQuestion ${!(FormData[entry] as any).toggled && 'hideQuestion'}`} key={entry}>
+          <div className={`formQuestion ${(!FormData[entry as keyof typeof FormData].toggled || FormData[entry as keyof typeof FormData].hidden) && 'hideQuestion'}`} key={entry}>
             {createFormQuestion(entry, FormData[entry])}
           </div>
         );
       })}
       <div className='formQuestion'>
-        <Button title='List It!' onClick={submitForm} />
+        <Button title='List It!' onClick={submitForm} id='submitButton' />
       </div>
     </form>
   );

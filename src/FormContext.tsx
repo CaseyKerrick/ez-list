@@ -20,6 +20,7 @@ export type FormEntry<T> = {
   type: any;
   required: boolean;
   props: any;
+  hidden?: boolean;
 };
 
 export type FormContextType = {
@@ -223,8 +224,8 @@ export const defaultToggles = {
   paymentPolicy: false,
   minimumOffer: false,
   autoAccept: false,
-  scheduleListing: false,
-  scheduleListingDateTime: false,
+  scheduleListing: true,
+  scheduleListingDateTime: true,
   duration: true,
   startingBid: true,
   buyItNowPrice: false,
@@ -246,12 +247,12 @@ export const defaultToggles = {
 export const FormContext = React.createContext<FormContextType | null>(null);
 
 const loadItem = (name: string): any => {
-  return LocalStorage.getSavedValue('default_' + name);
+  return LocalStorage.getSavedValue('default_' + name) || defaultValues[name as keyof typeof defaultValues];
 };
 
 const loadToggle = (name: string): any => {
   return LocalStorage.getToggle(name);
-}
+};
 
 export const FormContextProvider = ({ children }: any) => {
   const [templateType, setTemplateType] = React.useState(loadItem('templateType'));
@@ -598,6 +599,7 @@ export const FormContextProvider = ({ children }: any) => {
       props: country === 'United States'
         ? { dropdownItems: DropdownData.getUsStates(), enableSearch: true, strict: true }
         : { disabled: !country },
+      hidden: templateType !== 'Topographical',
     },
     theme: {
       value: theme,
@@ -697,7 +699,6 @@ export const FormContextProvider = ({ children }: any) => {
       type: Checklist,
       required: false,
       props: { checklistItems: DropdownData.getFeatures() },
-
     },
     material: {
       value: material,
@@ -718,6 +719,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getContinents(), enableSearch: false, strict: true },
+      hidden: templateType !== 'Topographical',
     },
     brandOrPublisher: {
       value: brandOrPublisher,
@@ -788,6 +790,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: false,
       props: {},
+      hidden: templateType !== 'Non-Topographical',
     },
     personalizationInstructions: {
       value: personalizationInstructions,
@@ -798,6 +801,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { disabled: !personalize },
+      hidden: templateType !== 'Non-Topographical',
     },
     artist: {
       value: artist,
@@ -915,7 +919,10 @@ export const FormContextProvider = ({ children }: any) => {
     },
     format: {
       value: format,
-      set: setFormat,
+      set: (item: string) => {
+        setFormat(item);
+        setAllowOffers(item === 'Buy It Now');
+      },
       toggled: formatToggle,
       setToggled: setFormatToggle,
       description: 'Format',
@@ -932,9 +939,10 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: true,
       props: { suggestions: ['5.95', '15.95', '19.95'], currency: true },
+      hidden: format !== 'Buy It Now',
     },
     requireImmediatePayment: {
-      value: requireImmediatePayment,
+      value: format !== 'Auction',
       set: setRequireImmediatePayment,
       toggled: requireImmediatePaymentToggle,
       setToggled: setRequireImmediatePaymentToggle,
@@ -954,14 +962,14 @@ export const FormContextProvider = ({ children }: any) => {
       props: {},
     },
     paymentPolicy: {
-      value: paymentPolicy,
+      value: format !== 'Auction' ? 'BIN Immediate Payment' : 'No Immediate Pay - Auction',
       set: setPaymentPolicy,
       toggled: paymentPolicyToggle,
       setToggled: setPaymentPolicyToggle,
       description: 'Payment Policy',
       type: Radio,
       required: true,
-      props: { radioButtons: ['BIN Immediate Payment', 'No Immediate Pay - Auction'] },
+      props: { radioButtons: ['BIN Immediate Payment', 'No Immediate Pay - Auction'], disabled: true },
     },
     allowOffers: {
       value: allowOffers,
@@ -981,6 +989,7 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Minimum Offer',
       type: TextField,
       required: false,
+      hidden: format !== 'Buy It Now',
       props: { currency: true },
     },
     autoAccept: {
@@ -991,6 +1000,7 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Auto Accept',
       type: TextField,
       required: false,
+      hidden: format !== 'Buy It Now',
       props: { currency: true },
     },
     scheduleListing: {
@@ -1022,6 +1032,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['7 Days', '10 Days'] },
+      hidden: format !== 'Auction',
     },
     startingBid: {
       value: startingBid,
@@ -1031,6 +1042,7 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Starting Bid',
       type: TextField,
       required: true,
+      hidden: format !== 'Auction',
       props: { currency: true },
     },
     buyItNowPrice: {
@@ -1041,6 +1053,7 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Buy It Now Price (Optional)',
       type: TextField,
       required: false,
+      hidden: format !== 'Auction',
       props: { currency: true },
     },
     autoRelist: {
@@ -1051,6 +1064,7 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Auto Relist',
       type: Toggle,
       required: true,
+      hidden: format !== 'Auction',
       props: {},
     },
     shippingPolicy: {
