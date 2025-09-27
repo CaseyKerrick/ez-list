@@ -1,6 +1,7 @@
 .formQuestion {
   /* border: 1px solid black; */
-  margin-bottom: 25px;
+  /* width: fit-content; */
+  min-height: 120px;
 }
 
 form {
@@ -8,6 +9,10 @@ form {
   padding-right: 20px;
   padding-top: 20px;
   width: calc(100% - 40px);
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(8, 175px);
+  grid-auto-flow: row;
 }
 
 .imageUploadPlaceholder {
@@ -21,11 +26,5 @@ form {
 }
 
 .hideQuestion {
-  height: 0;
-  width: 0;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  border: 0;
+  display: none;
 }
-

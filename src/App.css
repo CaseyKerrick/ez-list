@@ -1,16 +1,18 @@
 .appContainer {
   margin-left: auto;
   margin-right: auto;
-  border: 3px solid #90029C;
-  width: 90%;
+  border: 3px solid #007DBA;
+  width: 1580px;
   min-height: calc(100vh - 120px);
   border-radius: 10px;
   padding: 10px;
-  background-color: white;
+  background-color: #FFF8F2;
+  margin-bottom: 20px;
 }
 
 body {
-  background-image: url('../public/pink-sparkles.gif');
+  /* background-image: url('../public/pink-sparkles.gif'); */
+  background-color: #FFF8F2;
 }
 
 .navbar {
@@ -18,18 +20,18 @@ body {
   margin-bottom: 3px;
   margin-left: auto;
   margin-right: auto;
-  width: 85%;
+  width: 75%;
   height: 40px;
 }
 
 .navItem {
   display: inline-block;
-  color: white;
+  color: #FFF8F2;
   font-weight: bold;
   text-align: center;
   line-height: 40px;
-  background-color: #90029C;
-  border: 3px solid #90029C;
+  background-color: #007DBA;
+  border: 3px solid #007DBA;
   width: 200px;
   margin-right: 10px;
   height: 40px;
@@ -40,7 +42,11 @@ body {
 }
 
 .currentNavItem {
-  background-color: white;
-  color: #90029C;
-  border-bottom-color: white;
+  background-color: #FFF8F2;
+  color: #007DBA;
+  border-bottom-color: #FFF8F2;
+}
+
+input {
+  background-color: #FFF8F2;
 }

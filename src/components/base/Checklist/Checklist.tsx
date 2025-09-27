@@ -35,27 +35,29 @@ function Checklist(props: PropType) {
 
   return (
     <div className={`checklistContainer ${displayClassWhen(props.disabled, 'checklistContainerDisabled')}`}>
-       <div className={`title ${displayClassWhen(props.required && error, 'error')} ${displayClassWhen(props.disabled, 'disabled')}`}>{props.title}{props.required && '*'}</div>
-      { props.checklistItems.length > 0 && props.checklistItems.map((checklistItem: string) => (
-        <span key={checklistItem} onClick={handleChange(checklistItem)} data-testid={`${props.id}_span_${checklistItem}`}>
-          <input
-            id={`${props.id}_${checklistItem}`}
-            data-testid={`${props.id}_${checklistItem}`}
-            type='checkbox'
-            className='checkbox'
-            name={checklistItem}
-            value={checklistItem}
-            checked={isSelected(checklistItem)}
-            onChange={handleChange(checklistItem)}
-          />
-          <label
-            htmlFor={checklistItem}
-            className={`checklistItem ${displayClassWhen(isSelected(checklistItem), 'checkboxChecked')} ${displayClassWhen(props.disabled, 'checkboxDisabled')} ${displayClassWhen(props.disabled && isSelected(checklistItem), 'checkboxCheckedDisabled')}`}
-          >
-            {checklistItem}
-          </label>
-        </span>
-      ))}
+      <div className={`title ${displayClassWhen(props.required && error, 'error')} ${displayClassWhen(props.disabled, 'disabled')}`}>{props.title}{props.required && '*'}</div>
+      <div className='checklistButtonContainer'>
+        { props.checklistItems.length > 0 && props.checklistItems.map((checklistItem: string) => (
+          <span key={checklistItem} onClick={handleChange(checklistItem)} data-testid={`${props.id}_span_${checklistItem}`}>
+            <input
+              id={`${props.id}_${checklistItem}`}
+              data-testid={`${props.id}_${checklistItem}`}
+              type='checkbox'
+              className='checkbox'
+              name={checklistItem}
+              value={checklistItem}
+              checked={isSelected(checklistItem)}
+              onChange={handleChange(checklistItem)}
+            />
+            <label
+              htmlFor={checklistItem}
+              className={`checklistItem ${displayClassWhen(isSelected(checklistItem), 'checkboxChecked')} ${displayClassWhen(props.disabled, 'checkboxDisabled')} ${displayClassWhen(props.disabled && isSelected(checklistItem), 'checkboxCheckedDisabled')}`}
+            >
+              {checklistItem}
+            </label>
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

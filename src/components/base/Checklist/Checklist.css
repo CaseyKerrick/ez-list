@@ -1,5 +1,5 @@
 .checklistItem {
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
   height: 40px;
   display: inline-block;
@@ -10,7 +10,7 @@
 }
 
 .checkboxChecked {
-  background-color: #90029C;
+  background-color: #007DBA;
   color: white;
 }
 
@@ -19,9 +19,10 @@
 }
 
 .checklistContainer {
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
   width: fit-content;
+  margin-top: 8px;
 }
 
 .hideChecklist {
@@ -42,4 +43,11 @@
 
 .checkboxCheckedDisabled {
   background-color: gray;
+}
+
+.checklistButtonContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

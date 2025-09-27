@@ -2,7 +2,7 @@
   height: 40px;
   line-height: 40px;
   font-size: 18px;
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -13,12 +13,11 @@
 }
 
 .textFieldTitle {
-  font-size: 13px;
-  color: #90029C;
-  background-color: white;
+  font-size: 14px;
+  color: #007DBA;
+  background-color: #FFF8F2;
   margin-left: 15px;
   margin-bottom: -9px;
-  /* margin-top: -11px; */
   padding-left: 5px;
   padding-right: 5px;
   width: fit-content;
@@ -26,22 +25,10 @@
   height: fit-content;
 }
 
-/* .title {
-  background-color: white;
-  margin-top: -11px;
-  margin-left: 11px;
-  padding-left: 5px;
-  padding-right: 5px;
-  width: fit-content;
-  font-size: 13px;
-  color: #90029C;
-  margin-right: 10px;
-} */
-
 .characterLimit {
   font-size: 10px;
   text-align: right;
-  color: #90029C;
+  color: #007DBA;
 }
 
 .error {
@@ -63,11 +50,12 @@
   text-align: center;
   font-style: normal;
   font-size: 18px;
-  color: #90029C;
+  color: #007DBA;
 }
 
 .textInputContainer {
   position: relative;
+  display: inline-block;
 }
 
 .textInputCurrency {

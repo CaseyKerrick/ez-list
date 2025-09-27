@@ -1,15 +1,23 @@
-.dateTimeContainer {
-  /* display: flex; */
-  width: 750px;
-  /* justify-content: space-around; */
-  border: 3px solid #90029C;
+.dayContainer {
+  border: 3px solid #007DBA;
   border-radius: 10px;
+  margin-top: 8px;
 }
 
 .dateTimeInputs {
   margin-left: 5px;
-  margin-right: 5px;
   margin-bottom: 5px;
+}
+
+.dateTimeContainer {
+  width: 200px;
+  display: inline-block;
+}
+
+.amPmContainer {
+  width: fit-content;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .toggleDisabled {

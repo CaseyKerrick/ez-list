@@ -7,8 +7,8 @@
 }
 
 .toggleButtonOn {
-  border: 3px solid #90029C;
-  background-color: #90029C;
+  border: 3px solid #007DBA;
+  background-color: #007DBA;
 }
 
 .toggleButtonOff {
@@ -20,7 +20,7 @@
   border-radius: 10px;
   height: 25px;
   width: 25px;
-  background-color: white;
+  background-color: #FFF8F2;
 }
 
 .toggleCircleLeft {

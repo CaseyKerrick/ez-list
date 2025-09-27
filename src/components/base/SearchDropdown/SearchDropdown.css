@@ -2,7 +2,7 @@
   height: 40px;
   line-height: 40px;
   font-size: 18px;
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -13,9 +13,9 @@
 }
 
 .searchDropdownTitle {
-  font-size: 13px;
-  color: #90029C;
-  background-color: white;
+  font-size: 14px;
+  color: #007DBA;
+  background-color: #FFF8F2;
   margin-left: 15px;
   margin-bottom: -9px;
   padding-left: 5px;
@@ -33,7 +33,7 @@
   padding-bottom: 14px;
   margin-left: -30px;
   margin-bottom: -15px;
-  background-color: #90029C;
+  background-color: #007DBA;
 
 }
 
@@ -42,11 +42,11 @@
 }
 
 .dropdownContainer {
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   margin-top: -3px;
-  background-color: white;
+  background-color: #FFF8F2;
   position: absolute;
   z-index: 100;
   overflow-y: scroll;
@@ -69,7 +69,7 @@
 }
 
 .dropdownItemsImportanceDivider {
-  border-color: #90029C;
+  border-color: #007DBA;
 }
 
 .highlightedItem {
@@ -86,7 +86,7 @@
   height: 13px;
   line-height: 12px;
   margin-left: 5px;
-  background-color: #90029C;
+  background-color: #007DBA;
   color: white;
   padding-left: 5px;
   padding-right: 5px;

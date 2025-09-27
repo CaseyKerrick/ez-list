@@ -4,8 +4,20 @@ const DescriptionData = {
     return 'Please see the photos for this item\'s condition and send us a message if you have questions or would like clarification.';
   },
 
-  getConditionDescriptionFor: (item: string) => {
-    return `This card has a ${item.toLowerCase()}.`;
+  getConditionDescriptionFor: (items: string[]) => {
+    const lowercaseItems = items.map(item => item.toLowerCase());
+
+    if (items.length === 1) {
+      return `This card has a ${lowercaseItems[0]}.`;
+    } else if (items.length === 2) {
+      return `This card has a ${lowercaseItems[0]} and a ${lowercaseItems[1]}.`;
+    } else if (items.length > 2) {
+      const nMinusOneArray = lowercaseItems.slice(0, items.length - 1);
+
+      return `This card has a ${nMinusOneArray.join(', ')}, and ${lowercaseItems[items.length - 1]}.`;
+    }
+
+    return '';
   },
 
   getDescription: () => {

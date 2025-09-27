@@ -21,6 +21,7 @@ export type FormEntry<T> = {
   required: boolean;
   props: any;
   hidden?: boolean;
+  columnWidth?: number;
 };
 
 export type FormContextType = {
@@ -208,13 +209,13 @@ export const defaultToggles = {
   artist: true,
   featuredPerson: false,
   size: false,
-  timePeriodManufactured: true,
+  timePeriodManufactured: false,
   californiaProp65Warning: false,
   unitQuantity: false,
   unitType: false,
   condition: false,
   conditionTypes: true,
-  conditionDescription: true,
+  conditionDescription: false,
   description: false,
   format: true,
   price: true,
@@ -224,8 +225,8 @@ export const defaultToggles = {
   paymentPolicy: false,
   minimumOffer: false,
   autoAccept: false,
-  scheduleListing: true,
-  scheduleListingDateTime: true,
+  scheduleListing: false,
+  scheduleListingDateTime: false,
   duration: true,
   startingBid: true,
   buyItNowPrice: false,
@@ -470,7 +471,8 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Title',
       type: TextField,
       required: true,
-      props: { characterLimit: 80, width: 700 },
+      props: { characterLimit: 80 },
+      columnWidth: 4,
     },
     templateType: {
       value: templateType,
@@ -481,6 +483,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['Topographical', 'Non-Topographical'] },
+      columnWidth: 2,
     },
     customLabelSKU: {
       value: customLabelSKU,
@@ -490,7 +493,8 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Custom Label (SKU)',
       type: TextField,
       required: false,
-      props: { characterLimit: 50, width: 150 },
+      props: { characterLimit: 50 },
+      columnWidth: 1,
     },
     storeCategory1: {
       value: storeCategory1,
@@ -500,7 +504,8 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Store Category 1',
       type: SearchDropdown,
       required: true,
-      props: { dropdownItems: DropdownData.getStoreCategories(), enableSearch: true, strict: true, width: 400 },
+      props: { dropdownItems: DropdownData.getStoreCategories(), enableSearch: true, strict: true },
+      columnWidth: 2,
     },
     storeCategory2: {
       value: storeCategory2,
@@ -510,7 +515,8 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Store Category 2',
       type: SearchDropdown,
       required: false,
-      props: { dropdownItems: DropdownData.getStoreCategories(), enableSearch: true, strict: true, width: 400 },
+      props: { dropdownItems: DropdownData.getStoreCategories(), enableSearch: true, strict: true },
+      columnWidth: 2,
     },
     upc: {
       value: upc,
@@ -520,7 +526,8 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'UPC Number',
       type: TextField,
       required: false,
-      props: { width: 150 },
+      props: {},
+      columnWidth: 1,
     },
     occasion: {
       value: occasion,
@@ -534,8 +541,10 @@ export const FormContextProvider = ({ children }: any) => {
         priorityItem: DropdownData.getOccasionsPriority(),
         dropdownItems: DropdownData.getOccasions(),
         enableSearch: true,
-        strict: false
+        strict: false,
       },
+      hidden: templateType !== 'Non-Topographical',
+      columnWidth: 2,
     },
     city: {
       value: city,
@@ -546,6 +555,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { suggestions: ['Chicago', 'New York City', 'San Francisco'] },
+      columnWidth: 2,
     },
     subject: {
       value: subject,
@@ -556,6 +566,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 2,
     },
     countryRegionOfManufacture: {
       value: countryRegionOfManufacture,
@@ -571,6 +582,7 @@ export const FormContextProvider = ({ children }: any) => {
         strict: true,
         enableSearch: true,
       },
+      columnWidth: 2,
     },
     country: {
       value: country,
@@ -587,6 +599,7 @@ export const FormContextProvider = ({ children }: any) => {
         enableSearch: true,
         strict: false,
       },
+      columnWidth: 2,
     },
     region: {
       value: region,
@@ -600,6 +613,7 @@ export const FormContextProvider = ({ children }: any) => {
         ? { dropdownItems: DropdownData.getUsStates(), enableSearch: true, strict: true }
         : { disabled: !country },
       hidden: templateType !== 'Topographical',
+      columnWidth: 2,
     },
     theme: {
       value: theme,
@@ -615,6 +629,7 @@ export const FormContextProvider = ({ children }: any) => {
         enableSearch: true,
         strict: false,
       },
+      columnWidth: 2,
     },
     unitOfSale: {
       value: unitOfSale,
@@ -625,6 +640,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getUnitsOfSale(), enableSearch: false, strict: true },
+      columnWidth: 1,
     },
     postcardType: {
       value: postcardType,
@@ -635,6 +651,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getTypes(), enableSearch: true, strict: false },
+      columnWidth: 2,
     },
     originalOrLicensedReprint: {
       value: originalOrLicensedReprint,
@@ -645,6 +662,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['Original', 'Licensed Reprint'] },
+      columnWidth: 2,
     },
     postageCondition: {
       value: postageCondition,
@@ -655,6 +673,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['Posted', 'Unposted'] },
+      columnWidth: 2,
     },
     era: {
       value: era,
@@ -669,6 +688,7 @@ export const FormContextProvider = ({ children }: any) => {
         enableSearch: true,
         strict: false,
       },
+      columnWidth: 2,
     },
     yearManufactured: {
       value: yearManufactured,
@@ -679,26 +699,29 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
+    },
+    artist: {
+      value: artist,
+      set: setArtist,
+      toggled: artistToggle,
+      setToggled: setArtistToggle,
+      description: 'Artist',
+      type: TextField,
+      required: false,
+      props: {},
+      columnWidth: 1,
     },
     numberOfItemsInSet: {
       value: numberOfItemsInSet,
       set: setNumberOfItemsInSet,
       toggled: numberOfItemsInSetToggle,
       setToggled: setNumberOfItemsInSetToggle,
-      description: 'Number of Items in Set',
+      description: '# of Items in Set',
       type: TextField,
       required: false,
       props: { suggestions: ['1']},
-    },
-    features: {
-      value: features,
-      set: setFeatures,
-      toggled: featuresToggle,
-      setToggled: setFeaturesToggle,
-      description: 'Features',
-      type: Checklist,
-      required: false,
-      props: { checklistItems: DropdownData.getFeatures() },
+      columnWidth: 1,
     },
     material: {
       value: material,
@@ -709,6 +732,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Checklist,
       required: false,
       props: { checklistItems: DropdownData.getMaterials() },
+      columnWidth: 4,
     },
     continent: {
       value: continent,
@@ -720,6 +744,7 @@ export const FormContextProvider = ({ children }: any) => {
       required: false,
       props: { dropdownItems: DropdownData.getContinents(), enableSearch: false, strict: true },
       hidden: templateType !== 'Topographical',
+      columnWidth: 1,
     },
     brandOrPublisher: {
       value: brandOrPublisher,
@@ -730,6 +755,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getCommonPublishers(), enableSearch: true, strict: false },
+      columnWidth: 2,
     },
     franchise: {
       value: franchise,
@@ -740,6 +766,18 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { suggestions: ['Disney'] },
+      columnWidth: 1,
+    },
+    features: {
+      value: features,
+      set: setFeatures,
+      toggled: featuresToggle,
+      setToggled: setFeaturesToggle,
+      description: 'Features',
+      type: Checklist,
+      required: false,
+      props: { checklistItems: DropdownData.getFeatures() },
+      columnWidth: 2,
     },
     occasion2: {
       value: occasion2,
@@ -750,6 +788,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     character: {
       value: character,
@@ -760,6 +799,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     signed: {
       value: signed,
@@ -767,9 +807,10 @@ export const FormContextProvider = ({ children }: any) => {
       toggled: signedToggle,
       setToggled: setSignedToggle,
       description: 'Signed',
-      type: TextField,
+      type: Toggle,
       required: false,
       props: { disabled: true },
+      columnWidth: 1,
     },
     signedBy: {
       value: signedBy,
@@ -780,6 +821,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { disabled: true },
+      columnWidth: 1,
     },
     personalize: {
       value: personalize,
@@ -791,6 +833,7 @@ export const FormContextProvider = ({ children }: any) => {
       required: false,
       props: {},
       hidden: templateType !== 'Non-Topographical',
+      columnWidth: 1,
     },
     personalizationInstructions: {
       value: personalizationInstructions,
@@ -802,16 +845,7 @@ export const FormContextProvider = ({ children }: any) => {
       required: false,
       props: { disabled: !personalize },
       hidden: templateType !== 'Non-Topographical',
-    },
-    artist: {
-      value: artist,
-      set: setArtist,
-      toggled: artistToggle,
-      setToggled: setArtistToggle,
-      description: 'Artist',
-      type: TextField,
-      required: false,
-      props: {},
+      columnWidth: 2,
     },
     featuredPerson: {
       value: featuredPerson,
@@ -822,6 +856,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     size: {
       value: size,
@@ -832,6 +867,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     timePeriodManufactured: {
       value: timePeriodManufactured,
@@ -842,6 +878,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { default: decade.length > 0 ? `${decade[0]}0-${decade[0]}9` : '' },
+      columnWidth: 2,
     },
     californiaProp65Warning: {
       value: californiaProp65Warning,
@@ -852,6 +889,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: { characterLimit: 800 },
+      columnWidth: 2,
     },
     unitQuantity: {
       value: unitQuantity,
@@ -862,6 +900,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     unitType: {
       value: unitType,
@@ -872,6 +911,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: SearchDropdown,
       required: false,
       props: { dropdownItems: DropdownData.getUnitTypes(), enableSearch: true, strict: true },
+      columnWidth: 1,
     },
     condition: {
       value: condition,
@@ -882,13 +922,19 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['New', 'Used'] },
+      columnWidth: 2,
     },
     conditionTypes: {
       value: conditionTypes,
       set: (items: string[]) => {
         setConditionTypes(items);
-        const descrip = [...items.map(DescriptionData.getConditionDescriptionFor), DescriptionData.getBaseConditionDescription()].join('\n');
-        setConditionDescription(descrip);
+
+        if (items.length === 0) {
+          setConditionDescription(DescriptionData.getBaseConditionDescription());
+        } else {
+          const descrip = [DescriptionData.getConditionDescriptionFor(items), DescriptionData.getBaseConditionDescription()].join('\n');
+          setConditionDescription(descrip);
+        }
       },
       toggled: conditionTypesToggle,
       setToggled: setConditionTypesToggle,
@@ -896,6 +942,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Checklist,
       required: false,
       props: { checklistItems: ['Tear', 'Crease', 'Bend', 'Pinhole'] },
+      columnWidth: 2,
     },
     conditionDescription: {
       value: conditionDescription,
@@ -906,6 +953,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextArea,
       required: false,
       props: { characterLimit: 1000, disabled: true },
+      columnWidth: 2,
     },
     description: {
       value: description,
@@ -916,6 +964,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: DisplayText,
       required: false,
       props: { parseHtml: true },
+      columnWidth: 4,
     },
     format: {
       value: format,
@@ -929,6 +978,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['Buy It Now', 'Auction'] },
+      columnWidth: 2,
     },
     price: {
       value: price,
@@ -938,8 +988,9 @@ export const FormContextProvider = ({ children }: any) => {
       description: 'Price',
       type: TextField,
       required: true,
-      props: { suggestions: ['5.95', '15.95', '19.95'], currency: true },
+      props: { suggestions: ['5.95', '15.95', '19.95'], currency: true, width: 132 },
       hidden: format !== 'Buy It Now',
+      columnWidth: 1,
     },
     requireImmediatePayment: {
       value: format !== 'Auction',
@@ -950,6 +1001,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: { disabled: true },
+      columnWidth: 1,
     },
     quantity: {
       value: quantity,
@@ -960,6 +1012,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     paymentPolicy: {
       value: format !== 'Auction' ? 'BIN Immediate Payment' : 'No Immediate Pay - Auction',
@@ -970,6 +1023,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['BIN Immediate Payment', 'No Immediate Pay - Auction'], disabled: true },
+      columnWidth: 3,
     },
     allowOffers: {
       value: allowOffers,
@@ -980,6 +1034,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     minimumOffer: {
       value: minimumOffer,
@@ -990,7 +1045,8 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       hidden: format !== 'Buy It Now',
-      props: { currency: true },
+      props: { currency: true, width: 132 },
+      columnWidth: 1,
     },
     autoAccept: {
       value: autoAccept,
@@ -1001,27 +1057,8 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       hidden: format !== 'Buy It Now',
-      props: { currency: true },
-    },
-    scheduleListing: {
-      value: scheduleListing,
-      set: setScheduleListing,
-      toggled: scheduleListingToggle,
-      setToggled: setScheduleListingToggle,
-      description: 'Schedule Your Listing?',
-      type: Toggle,
-      required: true,
-      props: {},
-    },
-    scheduleListingDateTime: {
-      value: scheduleListingDateTime,
-      set: setScheduleListingDateTime,
-      toggled: scheduleListingDateTimeToggle,
-      setToggled: setScheduleListingDateTimeToggle,
-      description: 'Schedule Your Listing',
-      type: DateTime,
-      required: true,
-      props: { disabled: !scheduleListing },
+      props: { currency: true, width: 132  },
+      columnWidth: 1,
     },
     duration: {
       value: duration,
@@ -1033,6 +1070,29 @@ export const FormContextProvider = ({ children }: any) => {
       required: true,
       props: { radioButtons: ['7 Days', '10 Days'] },
       hidden: format !== 'Auction',
+      columnWidth: 2,
+    },
+    scheduleListing: {
+      value: scheduleListing,
+      set: setScheduleListing,
+      toggled: scheduleListingToggle,
+      setToggled: setScheduleListingToggle,
+      description: 'Schedule Listing?',
+      type: Toggle,
+      required: true,
+      props: {},
+      columnWidth: 1,
+    },
+    scheduleListingDateTime: {
+      value: scheduleListingDateTime,
+      set: setScheduleListingDateTime,
+      toggled: scheduleListingDateTimeToggle,
+      setToggled: setScheduleListingDateTimeToggle,
+      description: 'Schedule Your Listing',
+      type: DateTime,
+      required: true,
+      props: { disabled: !scheduleListing },
+      columnWidth: 3,
     },
     startingBid: {
       value: startingBid,
@@ -1043,7 +1103,8 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: true,
       hidden: format !== 'Auction',
-      props: { currency: true },
+      props: { currency: true, width: 132 },
+      columnWidth: 1,
     },
     buyItNowPrice: {
       value: buyItNowPrice,
@@ -1054,7 +1115,8 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       hidden: format !== 'Auction',
-      props: { currency: true },
+      props: { currency: true, width: 132 },
+      columnWidth: 1,
     },
     autoRelist: {
       value: autoRelist,
@@ -1066,6 +1128,7 @@ export const FormContextProvider = ({ children }: any) => {
       required: true,
       hidden: format !== 'Auction',
       props: {},
+      columnWidth: 1,
     },
     shippingPolicy: {
       value: Number.parseFloat(price) >= 20 ? 'Shipping Postcards Over $20' : 'Shipping Postcards Under $20',
@@ -1076,6 +1139,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Radio,
       required: true,
       props: { radioButtons: ['Shipping Postcards Under $20', 'Shipping Postcards Over $20'], disabled: true },
+      columnWidth: 3,
     },
     packageWeight: {
       value: packageWeight,
@@ -1086,6 +1150,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     packageDimensions: {
       value: packageDimensions,
@@ -1096,6 +1161,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: false,
       props: {},
+      columnWidth: 1,
     },
     irregularPackage: {
       value: irregularPackage,
@@ -1106,6 +1172,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     itemLocationCountryRegion: {
       value: itemLocationCountryRegion,
@@ -1116,16 +1183,18 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: true,
       props: {},
+      columnWidth: 2,
     },
     itemLocationZipCode: {
       value: itemLocationZipCode,
       set: setItemLocationZipCode,
       toggled: itemLocationZipCodeToggle,
       setToggled: setItemLocationZipCodeToggle,
-      description: 'Item Location - Zip Code',
+      description: 'Item Location - Zip',
       type: TextField,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     itemLocationCityState: {
       value: itemLocationCityState,
@@ -1136,6 +1205,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: TextField,
       required: true,
       props: {},
+      columnWidth: 2,
     },
     productDocuments: {
       value: productDocuments,
@@ -1146,6 +1216,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: { disabled: true },
+      columnWidth: 1,
     },
     promoteListingGeneral: {
       value: promoteListingGeneral,
@@ -1156,16 +1227,18 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     adRate: {
       value: adRate,
       set: setAdRate,
       toggled: adRateToggle,
       setToggled: setAdRateToggle,
-      description: 'Listing Ad Rate (General)',
+      description: 'Ad Rate (General)',
       type: TextField,
       required: true,
       props: {},
+      columnWidth: 1,
     },
     promoteListingPriority: {
       value: promoteListingPriority,
@@ -1176,6 +1249,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: { disabled: true },
+      columnWidth: 1,
     },
     charity: {
       value: charity,
@@ -1186,6 +1260,7 @@ export const FormContextProvider = ({ children }: any) => {
       type: Toggle,
       required: true,
       props: { disabled: true },
+      columnWidth: 1,
     },
   };
 

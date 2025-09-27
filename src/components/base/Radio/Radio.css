@@ -3,9 +3,9 @@
 }
 
 .radioButton {
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
-  height: 40px;
+  min-height: 40px;
   display: inline-block;
   min-width: 130px;
   text-align: center;
@@ -16,26 +16,29 @@
 }
 
 .checkedRadioButton {
-  background-color: #90029C;
+  background-color: #007DBA;
   color: white;
 }
 
 .radioButtonsContainer {
-  border: 3px solid #90029C;
+  border: 3px solid #007DBA;
   border-radius: 10px;
   width: fit-content;
-  margin-top: 10px;
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
 }
 
 .title {
-  background-color: white;
+  background-color: #FFF8F2;
   margin-top: -11px;
   margin-left: 11px;
   padding-left: 5px;
   padding-right: 5px;
   width: fit-content;
-  font-size: 13px;
-  color: #90029C;
+  font-size: 14px;
+  color: #007DBA;
   margin-right: 10px;
 }
 

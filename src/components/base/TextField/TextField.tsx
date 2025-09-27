@@ -39,7 +39,7 @@ function TextField(props: PropType) {
   };
 
   const widthChooser = (characterLimit?: boolean) =>
-    `${(props.width || 250) + (characterLimit ? 15 : 0)}px`;
+    `${(props.width || 324) + (characterLimit ? 15 : 0)}px`;
 
   const inputBlur = () => {
     if (props.required && !props.value) {
